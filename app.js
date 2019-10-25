@@ -11,6 +11,8 @@ app.use(express.static("style")); // Allows access to the styles folder
 app.use(express.static("images")); // Allows access to the images folder
 
 
+// Initiate mysql here
+
 // body parser to get information
 var fs = require('fs');
 var bodyParser = require("body-parser"); // call body parser module and make use of it
