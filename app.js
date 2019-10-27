@@ -12,11 +12,79 @@ app.use(express.static("images")); // Allows access to the images folder
 
 
 // Initiate mysql here
+var mysql = require('mysql');
+
 
 // body parser to get information
 var fs = require('fs');
 var bodyParser = require("body-parser"); // call body parser module and make use of it
 app.use(bodyParser.urlencoded({extended:true}));
+
+
+// Initiate file uploader
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
+
+// -----------SQL with Gearhost database-----------
+
+const db = mysql.createConnection({
+    host: 'den1.mysql3.gear.host',  //address where the mySQL database is hosted
+    user: 'audionation',
+    password: 'Pe9o4zcizy?~',
+    database: 'AUDIONATION'
+});
+
+// the next section creates the connnection to the database
+
+db.connect((err) =>{
+    if(err){
+        console.log("go back and check the connection details. Something is wrong.") // console.log is used instead of crashing the app
+        // throw(err)
+    } else {
+        console.log('database connected')
+    }
+});
+
+// this route will create a database table
+
+// app.get('/createtable',function(req,res){
+// //     // Create a table that will show Item Id, artist name, album name, image, genre, condition, description, sale type
+//     let sql = 'CREATE TABLE products (Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, Artist varchar(255), Album varchar(255), Image varchar(255), Genre varchar(255), Condition varchar(255), Description varchar(255), Type varchar(255), Price int)';
+       
+    
+       
+//     let query = db.query(sql, (err,res) => {
+        
+//          if(err) throw err;
+        
+//          console.log(res);
+        
+//     });
+    
+//     res.send("You created your first DB Table")
+    
+//  })
+
+// ==========This route will create a product ============================ 
+
+// app.get('/insert',function(req,res){
+//     // Insert Into table Item Id, artist name, album name, image, genre, condition, description, sale type, price
+//     let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Condition, Description, Type, Price) VALUES("Soundgarden", "Badmotorfinger", "bmf.jpg", "Alt-Rock/Alt-Metal", "Good", "Released 1991, 3rd studio album", "Auction", "18")';
+    
+// 
+    
+//     let query = db.query(sql, (err,res) => {
+        
+//          if(err) throw err;
+        
+//          console.log(res);
+        
+//     });
+    
+//     res.send("You created your Item");
+    
+//  });
 
 
 // +++++++ JSON ++++++++++
@@ -35,33 +103,43 @@ console.log("Home Page Loaded"); // used to output activity in the console
 
 
 app.get('/items', function(req, res) {
-    res.render("items");
-    console.log("items page loaded");
+    
+    let sql = 'SELECT * FROM products';
+    
+    let query = db.query(sql, (err,result) => {
+        
+        if(err) throw err;
+        
+        console.log(result);
+        
+        res.render("items", {result});
+    });
+    
 });
 
 app.get('/additem', function(req, res) {
    res.render("additem");
-   console.log("additem page loaded");
+  
 });
 
 app.get('/profile', function(req, res) {
    res.render("profile"); 
-   console.log("profile page loaded");
+  
 });
 
 app.get('/cart', function(req, res) {
     res.render('cart');
-    console.log("cart page loaded");
+   
 })
 
 app.get('/checkout', function(req, res) {
     res.render("checkout");
-    console.log("Checkout page loaded");
+   
 });
 
 app.get('/register', function(req, res) {
     res.render("register");
-    console.log("registration page");
+    
 });
 
 
