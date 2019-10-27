@@ -50,7 +50,7 @@ db.connect((err) =>{
 
 // app.get('/createtable',function(req,res){
 // //     // Create a table that will show Item Id, artist name, album name, image, genre, condition, description, sale type
-//     let sql = 'CREATE TABLE products (Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, Artist varchar(255), Album varchar(255), Image varchar(255), Genre varchar(255), Condition varchar(255), Description varchar(255), Type varchar(255), Price int)';
+//     let sql = 'CREATE TABLE products (Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, Artist varchar(255), Album varchar(255), Image varchar(255), Genre varchar(255), Quality varchar(255), Info varchar(255), Price int, Purpose varchar(255))';
        
     
        
@@ -68,23 +68,23 @@ db.connect((err) =>{
 
 // ==========This route will create a product ============================ 
 
-// app.get('/insert',function(req,res){
-//     // Insert Into table Item Id, artist name, album name, image, genre, condition, description, sale type, price
-//     let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Condition, Description, Type, Price) VALUES("Soundgarden", "Badmotorfinger", "bmf.jpg", "Alt-Rock/Alt-Metal", "Good", "Released 1991, 3rd studio album", "Auction", "18")';
+app.get('/insert',function(req,res){
+    // Insert Into table Item Id, artist name, album name, image, genre, condition, description, sale type, price
+    let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("Soundgarden", "Badmotorfinger", "bmf.jpg", "Alt-Rock/Alt-Metal", "Good", "Released 1991, 3rd studio album", "18" "Auction")';
     
-// 
+
     
-//     let query = db.query(sql, (err,res) => {
+    let query = db.query(sql, (err,res) => {
         
-//          if(err) throw err;
+         if(err) throw err;
         
-//          console.log(res);
+         console.log(res);
         
-//     });
+    });
     
-//     res.send("You created your Item");
+    res.send("You created your Item");
     
-//  });
+ });
 
 
 // +++++++ JSON ++++++++++
