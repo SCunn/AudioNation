@@ -5,56 +5,62 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Create Item</div>
+                        <div class="card-header">Edit Item</div>
                         <div class="card-body">
                             
-                            <form accept-charset="UTF-8" action="/additem" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">
+                            
+                    <% result.forEach(function(item) { %>
+                    
+                            
+                    
+                            <form accept-charset="UTF-8" action="/edititem/<%= item.Id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">
+                               
                                 <div class="form-group row">
                                     <label for="artist" class="col-md-4 col-form-label text-md-right">Artist Name</label>
                                     <div class="col-md-6">
-                                        <input name="artist" type="text" class="form-control" placeholder="Enter Artist Name">
+                                        <input name="artist" type="text" class="form-control" placeholder="Enter Artist Name" value="<%= item.Artist %>" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="album" class="col-md-4 col-form-label text-md-right">Album Name</label>
                                     <div class="col-md-6">
-                                        <input name="album" type="text" class="form-control" placeholder="Enter Album Name">
+                                        <input name="album" type="text" class="form-control" placeholder="Enter Album Name" value="<%= item.Album %>" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="sampleFile" class="col-md-4 col-form-label text-md-right">Image</label>
+                                    <label for="image" class="col-md-4 col-form-label text-md-right">Image</label>
                                     <div class="col-md-6">
-                                         <input name="sampleFile" type="file" class="btn btn-primary" required title="You Must Upload an Image to Continue">
+                                         <input type="file" class="btn btn-primary" name="sampleFile" required title="You Must Upload an Image to Continue" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="genre" class="col-md-4 col-form-label text-md-right">Genre</label>
                                     <div class="col-md-6">
-                                         <input name="genre" type="text" class="form-control" placeholder="Enter Music Genre">
+                                         <input name="genre" type="text" class="form-control" placeholder="Enter Music Genre" value="<%= item.Genre %>" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="quality" class="col-md-4 col-form-label text-md-right">Condition</label>
                                     <div class="col-md-6">
-                                        <input name="quality" type="text" class="form-control" placeholder="Enter Item Condition">
+                                        <input name="quality" type="text" class="form-control" placeholder="Enter Item Condition" value="<%= item.Quality %>" />
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
                                     <label for="information" class="col-md-4 col-form-label text-md-right">Description</label>
                                     <div class="col-md-6">
-                                         <textarea name="information" type="text" class="form-control" style="width:100%; height:50px;"  maxlength="255"   title=" 255 Characters max" placeholder="Enter Item Description"></textarea>
+                                         <textarea name="information" type="text" class="form-control" style="width:100%; height:50px;"  maxlength="255"   title=" 255 Characters max" placeholder="Enter Item Description" value="<%= item.Info %>" ></textarea>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
                                     <label for="purpose" class="col-md-4 col-form-label text-md-right">Sale Type</label>
                                     <div class="col-md-6">
-                                        <select  name="purpose">
+                                        <select value="<%= item.Purpose %>"  name="purpose">
                                              <option>For Sale</option>
                                              <option>Auction</option>
                                              <option>Barter</option>
@@ -67,24 +73,21 @@
                                 <div class="form-group row">
                                     <label for="price" class="col-md-4 col-form-label text-md-right">Price</label>
                                     <div class="col-md-6">
-                                         <input name="price" type="text" class="form-control" placeholder="Enter Item Price">
+                                         <input name="price" type="text" class="form-control" placeholder="Enter Item Price" value="<%= item.Price %>">
                                     </div>
                                 </div>
                                
 
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                        Create Item
-                                        </button>
+                                        
+                                        <button class="btn btn-primary">Edit</button>
                                     </div>
                                     
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="reset" class="btn btn-primary">
-                                        Reset
-                                        </button>
-                                    </div>
+                                    
                                 </div>
                             </form>
+                            
+                             <% }); %>
                         </div>
                     </div>
             </div>

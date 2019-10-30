@@ -9,26 +9,36 @@
     </div>
     <div class="col-sm-8 text-left"> 
       <h1>Welcome</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint 
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est 
+      laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore 
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+      aliquip ex ea commodo consequat.</p>
       <hr>
       <h3>Test</h3>
       
       <div id="item-cont">
         
         <% result.forEach(function(item) { %>
-        
+         <div><a href="/item/<%= item.Id %>" >View</a> </div>
+         <div><a href="/delete/<%= item.Id %>" >Delete</a> </div>
+         <div><a href="/edititem/<%= item.Id %>" >Edit</a> </div>
         <figure class="snip1423">
           <img src="/<%= item.Image %>" />
           <figcaption>
             <h3><%= item.Artist %></h3>
             <h3><%= item.Album %></h3>
-            <p>All this modern technology just makes people try to do everything at once.</p>
+             <h4><%= item.Genre %></h4>
+            <p><%= item.Info %></p>
             <div class="price">
-              <s><%= item.Price %></s>$19.00
+              <%= item.Price %>
             </div>
           </figcaption><i class="ion-android-cart"></i>
-          <a href="#"></a>
         </figure>
+       
+        
         
         
         

@@ -68,23 +68,23 @@ db.connect((err) =>{
 
 // ==========This route will create a product ============================ 
 
-app.get('/insert',function(req,res){
-    // Insert Into table Item Id, artist name, album name, image, genre, condition, description, sale type, price
-    let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("Soundgarden", "Badmotorfinger", "bmf.jpg", "Alt-Rock/Alt-Metal", "Good", "Released 1991, 3rd studio album", "18" "Auction")';
+// app.get('/insert',function(req,res){
+//     // Insert Into table Item Id, artist name, album name, image, genre, condition, description, sale type, price
+//     let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("Soundgarden", "Badmotorfinger", "bmf.jpg", "Alt-Rock/Alt-Metal", "Good", "Released 1991, 3rd studio album", 18, "Auction")';
     
 
     
-    let query = db.query(sql, (err,res) => {
+//     let query = db.query(sql, (err,res) => {
         
-         if(err) throw err;
+//          if(err) throw err;
         
-         console.log(res);
+//          console.log(res);
         
-    });
+//     });
     
-    res.send("You created your Item");
+//     res.send("You created your Item");
     
- });
+//  });
 
 
 // +++++++ JSON ++++++++++
@@ -102,7 +102,7 @@ console.log("Home Page Loaded"); // used to output activity in the console
 });
 
 
-app.get('/items', function(req, res) {
+app.get('/items', function(req,res) {
     
     let sql = 'SELECT * FROM products';
     
@@ -117,10 +117,132 @@ app.get('/items', function(req, res) {
     
 });
 
+// URL to additem.ejs
 app.get('/additem', function(req, res) {
    res.render("additem");
   
 });
+
+
+// post request from the additem.ejs form to database table products
+app.post('/additem', function(req, res) {
+    
+    let sampleFile = req.files.sampleFile;
+    imagename = sampleFile.name;
+    
+    sampleFile.mv('./images/' + imagename, function(err){
+        
+        if(err)
+        
+        return res.status(500).send(err);
+        console.log("Image you are uploading is " + imagename)
+        
+    })
+   
+   
+   // Insert into table that will show Artist, Album, image, genre, condition, description, price, sale type
+   let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES(" '+req.body.artist+'  ", " '+req.body.album+' ", "'+imagename+'", " '+req.body.genre+'  ", " '+req.body.quality+'  ", " '+req.body.information+'  ", '+req.body.price+', " '+req.body.purpose+'  ")';
+   
+   let query = db.query(sql, (err,res) => {
+       
+       if(err) throw err;
+       
+       console.log(res);
+   });
+    res.redirect('/profile');
+});
+
+app.get('/edititem/:id', function(req,res) {
+    
+    let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'" ';
+    
+    let query = db.query(sql, (err,result) => {
+        
+        if(err) throw err;
+        
+        console.log(result);
+        
+        res.render('edititem', {result});
+    });
+    
+    
+});
+
+// URL to edititem.ejs
+
+
+app.post('/edititem/:id', function(req,res) {
+    
+    
+     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let sampleFile = req.files.sampleFile;
+    imagename = sampleFile.name;
+    
+    //use the mv() method to place the file somewhere on the server
+    sampleFile.mv('./images/' + imagename, function(err){
+        
+        if(err);
+        
+        return res.status(500).send(err);
+        //console.log("Image you are uploading is " + imagename)
+       // res.redirect('/');
+    });    
+    
+    
+    // Update the sql database table called products
+    let sql = 'UPDATE products SET Artist = " '+req.body.artist+' ", Album = " '+req.body.album+' ", Image = " '+imagename+'  ", Genre = " '+req.body.genre+'  ", Quality = " '+req.body.quality+'  ", Info = " '+req.body.information+'  ", Price = '+req.body.price+', Purpose = " '+req.body.purpose+'" WHERE Id = "'+req.params.id+'" ';
+    
+    let query = db.query(sql, (err,res) => {
+        
+        if(err) throw err;
+        
+        console.log(res);
+    });
+    
+    res.redirect('/items');
+});
+
+
+// Url to see individual product
+app.get('/item/:id', function(req,res){
+    // Create a table that will show product Id, name, price, image and sporting activity
+    let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'" ';
+    
+    let query = db.query(sql, (err,result) => {
+        
+        if(err) throw err;
+        
+        console.log(res);
+        res.render('items', {result})
+    });
+    
+   
+    
+})
+
+
+
+
+// URL TO delete a product
+app.get('/delete/:id', function(req,res){
+    
+        let sql = 'DELETE FROM products WHERE Id =  "'+req.params.id+'" ';
+    
+    let query = db.query(sql, (err,result) => {
+        
+        if(err) throw err;
+        
+        console.log(result);
+        
+       
+        
+    });
+    
+    res.redirect('/items');
+    
+    
+})
+
 
 app.get('/profile', function(req, res) {
    res.render("profile"); 
