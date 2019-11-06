@@ -4,7 +4,7 @@ var app = express();    // declaration of the app
 
 
 // Set the template engine
-app.set('view engine', 'ejs'); //Tells the app that all pages will be rendered in the jade syntax unless otherwise stated
+app.set('view engine', 'ejs'); //Tells the app that all pages will be rendered in the ejs syntax unless otherwise stated
 
 app.use(express.static("views"));// allows access to views folder
 app.use(express.static("style")); // Allows access to the styles folder
@@ -65,6 +65,22 @@ db.connect((err) =>{
 //     res.send("You created your first DB Table")
     
 //  })
+
+//          !!!!!!!!!!!!   drop table  !!!!!!!!!!!!!!!!!
+
+// app.get('/droptable',function(req,res){
+    
+//     let sql = 'DROP TABLE products';
+    
+//     let query = db.query(sql, (err,res) => {
+        
+//         if(err) throw err;
+        
+//         console.log(res);
+//     });
+    
+//     res.send("Table Dropped");
+// });
 
 // ==========This route will create a product ============================ 
 
@@ -128,20 +144,20 @@ app.get('/additem', function(req, res) {
 app.post('/additem', function(req, res) {
     
     let sampleFile = req.files.sampleFile;
-    imagename = sampleFile.name;
+    filename = sampleFile.name;
     
-    sampleFile.mv('./images/' + imagename, function(err){
+    sampleFile.mv('./images/' + filename, function(err){
         
         if(err)
         
         return res.status(500).send(err);
-        console.log("Image you are uploading is " + imagename)
+        console.log("Image you are uploading is " + filename)
         
     })
    
    
    // Insert into table that will show Artist, Album, image, genre, condition, description, price, sale type
-   let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES(" '+req.body.artist+'  ", " '+req.body.album+' ", "'+imagename+'", " '+req.body.genre+'  ", " '+req.body.quality+'  ", " '+req.body.information+'  ", '+req.body.price+', " '+req.body.purpose+'  ")';
+   let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("'+req.body.artist+'", "'+req.body.album+'", "'+filename+'", "'+req.body.genre+'", "'+req.body.quality+'", "'+req.body.information+'", '+req.body.price+', "'+req.body.purpose+'")';
    
    let query = db.query(sql, (err,res) => {
        
@@ -152,9 +168,9 @@ app.post('/additem', function(req, res) {
     res.redirect('/profile');
 });
 
-app.get('/edititem/:id', function(req,res) {
+app.get('/edititem/:id', function(req, res) {
     
-    let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'" ';
+    let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'"';
     
     let query = db.query(sql, (err,result) => {
         
@@ -171,35 +187,38 @@ app.get('/edititem/:id', function(req,res) {
 // URL to edititem.ejs
 
 
-app.post('/edititem/:id', function(req,res) {
+app.post('/edititem/:id', function(req, res) {
     
     
      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.sampleFile;
-    imagename = sampleFile.name;
+    filename = sampleFile.name;
     
     //use the mv() method to place the file somewhere on the server
-    sampleFile.mv('./images/' + imagename, function(err){
+    sampleFile.mv('./images/' + filename, function(err){
         
-        if(err);
+        if(err)
         
         return res.status(500).send(err);
-        //console.log("Image you are uploading is " + imagename)
+        console.log("Image you are uploading is " + filename)
        // res.redirect('/');
     });    
     
     
     // Update the sql database table called products
-    let sql = 'UPDATE products SET Artist = " '+req.body.artist+' ", Album = " '+req.body.album+' ", Image = " '+imagename+'  ", Genre = " '+req.body.genre+'  ", Quality = " '+req.body.quality+'  ", Info = " '+req.body.information+'  ", Price = '+req.body.price+', Purpose = " '+req.body.purpose+'" WHERE Id = "'+req.params.id+'" ';
+    let sql = 'UPDATE products SET Artist = " '+req.body.artist+' ", Album = "'+req.body.album+'", Image = "'+filename+'", Genre = "'+req.body.genre+'", Quality = "'+req.body.quality+'", Info = "'+req.body.information+'", Price = '+req.body.price+', Purpose = "'+req.body.purpose+'" WHERE Id = "'+req.params.id+'" ';
     
     let query = db.query(sql, (err,res) => {
         
         if(err) throw err;
         
         console.log(res);
+        
     });
     
     res.redirect('/items');
+    
+   
 });
 
 
