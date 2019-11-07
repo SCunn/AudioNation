@@ -16,7 +16,7 @@ var mysql = require('mysql');
 
 
 // body parser to get information
-var fs = require('fs');
+var fs = require('fs');  // The Node.js file system module allows you to work with the file system on your computer.
 var bodyParser = require("body-parser"); // call body parser module and make use of it
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -105,7 +105,7 @@ db.connect((err) =>{
 
 // +++++++ JSON ++++++++++
 
-var social = require("./model/social.json"); // allow the app to access the social.json file
+var social = require("./data/social.json"); // allow the app to access the social.json file
 
 app.get('/social', function(req, res) {
     res.render("social",{social});
@@ -117,6 +117,11 @@ res.render("index"); // renders the index page in the web browser
 console.log("Home Page Loaded"); // used to output activity in the console
 });
 
+
+
+
+
+//===========SQL===============================================
 
 app.get('/items', function(req,res) {
     
