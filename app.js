@@ -2,14 +2,31 @@ var express = require("express"); // call the express module whoich is the defau
 
 var app = express();    // declaration of the app 
 
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
 
 // Set the template engine
 app.set('view engine', 'ejs'); //Tells the app that all pages will be rendered in the ejs syntax unless otherwise stated
+
+app.use(cookieParser());
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(express.static("views"));// allows access to views folder
 app.use(express.static("style")); // Allows access to the styles folder
 app.use(express.static("images")); // Allows access to the images folder
 
+// res.locals is an object passed to hbs engine
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+
+var Cart = require('./model/cart'); // path to cart.js
 
 // Initiate mysql here
 var mysql = require('mysql');
@@ -19,6 +36,7 @@ var mysql = require('mysql');
 var fs = require('fs');  // The Node.js file system module allows you to work with the file system on your computer.
 var bodyParser = require("body-parser"); // call body parser module and make use of it
 app.use(bodyParser.urlencoded({extended:true}));
+
 
 
 // Initiate file uploader
@@ -106,6 +124,7 @@ db.connect((err) =>{
 // +++++++ JSON ++++++++++
 
 var social = require("./data/social.json"); // allow the app to access the social.json file
+var products = require("./data/products.json");
 
 app.get('/social', function(req, res) {
     res.render("social",{social});
@@ -125,16 +144,17 @@ console.log("Home Page Loaded"); // used to output activity in the console
 
 app.get('/items', function(req,res) {
     
-    let sql = 'SELECT * FROM products';
+    res.render("items",{products});
+    // let sql = 'SELECT * FROM products';
     
-    let query = db.query(sql, (err,result) => {
+    //let query = db.query(sql, (err,result) => {
         
-        if(err) throw err;
+    //     if(err) throw err;
         
-        console.log(result);
+    //     console.log(result);
         
-        res.render("items", {result});
-    });
+    //     res.render("items", {result});
+    //});
     
 });
 
@@ -161,27 +181,27 @@ app.post('/additem', function(req, res) {
     })
    
    
-   // Insert into table that will show Artist, Album, image, genre, condition, description, price, sale type
-   let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("'+req.body.artist+'", "'+req.body.album+'", "'+filename+'", "'+req.body.genre+'", "'+req.body.quality+'", "'+req.body.information+'", '+req.body.price+', "'+req.body.purpose+'")';
+//   // Insert into table that will show Artist, Album, image, genre, condition, description, price, sale type
+//   let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("'+req.body.artist+'", "'+req.body.album+'", "'+filename+'", "'+req.body.genre+'", "'+req.body.quality+'", "'+req.body.information+'", '+req.body.price+', "'+req.body.purpose+'")';
    
-   let query = db.query(sql, (err,res) => {
+//   let query = db.query(sql, (err,res) => {
        
-       if(err) throw err;
+//       if(err) throw err;
        
-       console.log(res);
-   });
+//       console.log(res);
+//   });
     res.redirect('/profile');
 });
 
 app.get('/edititem/:id', function(req, res) {
     
-    let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'"';
+    // let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'"';
     
-    let query = db.query(sql, (err,result) => {
+    // let query = db.query(sql, (err,result) => {
         
-        if(err) throw err;
+    //     if(err) throw err;
         
-        console.log(result);
+    //     console.log(result);
         
         res.render('edititem', {result});
     });
@@ -210,16 +230,16 @@ app.post('/edititem/:id', function(req, res) {
     });    
     
     
-    // Update the sql database table called products
-    let sql = 'UPDATE products SET Artist = " '+req.body.artist+' ", Album = "'+req.body.album+'", Image = "'+filename+'", Genre = "'+req.body.genre+'", Quality = "'+req.body.quality+'", Info = "'+req.body.information+'", Price = '+req.body.price+', Purpose = "'+req.body.purpose+'" WHERE Id = "'+req.params.id+'" ';
+    // // Update the sql database table called products
+    // let sql = 'UPDATE products SET Artist = " '+req.body.artist+' ", Album = "'+req.body.album+'", Image = "'+filename+'", Genre = "'+req.body.genre+'", Quality = "'+req.body.quality+'", Info = "'+req.body.information+'", Price = '+req.body.price+', Purpose = "'+req.body.purpose+'" WHERE Id = "'+req.params.id+'" ';
     
-    let query = db.query(sql, (err,res) => {
+    // let query = db.query(sql, (err,res) => {
         
-        if(err) throw err;
+    //     if(err) throw err;
         
-        console.log(res);
+    //     console.log(res);
         
-    });
+    // });
     
     res.redirect('/items');
     
@@ -232,13 +252,13 @@ app.get('/item/:id', function(req,res){
     // Create a table that will show product Id, name, price, image and sporting activity
     let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'" ';
     
-    let query = db.query(sql, (err,result) => {
+    // let query = db.query(sql, (err,result) => {
         
-        if(err) throw err;
+    //     if(err) throw err;
         
-        console.log(res);
-        res.render('items', {result})
-    });
+    //     console.log(res);
+    //     res.render('items', {result})
+    // });
     
    
     
@@ -250,17 +270,17 @@ app.get('/item/:id', function(req,res){
 // URL TO delete a product
 app.get('/delete/:id', function(req,res){
     
-        let sql = 'DELETE FROM products WHERE Id =  "'+req.params.id+'" ';
+    //     let sql = 'DELETE FROM products WHERE Id =  "'+req.params.id+'" ';
     
-    let query = db.query(sql, (err,result) => {
+    // let query = db.query(sql, (err,result) => {
         
-        if(err) throw err;
+    //     if(err) throw err;
         
-        console.log(result);
+    //     console.log(result);
         
        
         
-    });
+    // });
     
     res.redirect('/items');
     
@@ -273,10 +293,7 @@ app.get('/profile', function(req, res) {
   
 });
 
-app.get('/cart', function(req, res) {
-    res.render('cart');
-   
-})
+
 
 app.get('/checkout', function(req, res) {
     res.render("checkout");
@@ -287,6 +304,60 @@ app.get('/register', function(req, res) {
     res.render("register");
     
 });
+
+
+////////////////////// Cart //////////////////////////////////////////////////////////
+
+
+app.get('/addtocart/:id', function(req, res, next) {
+    
+    let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'" ';
+        let query = db.query(sql, (err,result) => {
+            
+            if(err) throw err;
+            
+            console.log(result);
+            
+    });
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    var product = sql.filter(function(item) {
+        return item.id == productId;
+    });
+    cart.add(product[0], productId);
+    req.session.cart = cart;
+    res.redirect('items');
+    inline();
+ 
+});
+
+
+app.get('/cart', function(req, res, next) {
+      if (!req.session.cart) {
+        return res.render('cart', {
+            products: null
+    });
+  }
+  var cart = new Cart(req.session.cart);
+  res.render('cart', {
+    title: 'NodeJS Shopping Cart',
+    products: cart.getItems(),
+    totalPrice: cart.totalPrice
+  });
+   
+});
+
+app.get('/remove/:id', function(req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  cart.remove(productId);
+  req.session.cart = cart;
+  res.redirect('/cart');
+});
+
+
+
 
 
 
