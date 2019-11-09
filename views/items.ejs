@@ -21,11 +21,11 @@
       
       <div id="item-cont">
         
-        <% result.forEach(function(item) { %>
+        <% products.forEach(function(item) { %>
          <div><a href="/item/<%= item.Id %>" >View</a> </div>
          <div><a href="/delete/<%= item.Id %>" >Delete</a> </div>
          <div><a href="/edititem/<%= item.Id %>" >Edit</a> </div>
-         <div><a href="/addtocart/<%= item.Id %>" >Edit</a> </div>
+         <div><a href="/addtocart/<%= item.Id %>" >Add to Cart</a> </div>
         <figure class="snip1423">
           <img src="/<%= item.Image %>" />
           <figcaption>
@@ -36,6 +36,7 @@
             <div class="price">
               <%= item.Price %>
             </div>
+            <p><%= item.Purpose %></p>
           </figcaption><i class="ion-android-cart"></i>
         </figure>
        
