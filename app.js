@@ -5,6 +5,8 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
+const util = require('util');
+
 
 // Set the template engine
 app.set('view engine', 'ejs'); //Tells the app that all pages will be rendered in the ejs syntax unless otherwise stated
@@ -345,10 +347,7 @@ app.get('/profile', function(req, res) {
 
 
 
-app.get('/checkout', function(req, res) {
-    res.render("checkout");
-   
-});
+
 
 app.get('/register', function(req, res) {
     res.render("register");
@@ -369,39 +368,50 @@ app.get('/addtocart/:id', function(req, res, next) {
     cart.add(product[0], productId);
     req.session.cart = cart;
     console.log(req.session.cart);
-    res.redirect('items');
-    inline();
+    //util used here
+    //console.log(util.inspect(product, false, null, true ))
+    res.redirect('/items');
+    
  
 });
 
 
-// app.get('/cart', function(req, res, next) {
-//       if (!req.session.cart) {
-//         return res.render('cart', {
-//             products: null
-//     });
-//   }
-//   var cart = new Cart(req.session.cart);
-//   res.render('cart', {
-//     title: 'NodeJS Shopping Cart',
-//     products: cart.getItems(),
-//     totalPrice: cart.totalPrice
-//   });
+app.get('/cart', function(req, res, next) {
+      if (!req.session.cart) {              //check if there are products in the cart or not 
+        return res.render('cart', {
+            products: null
+    });
+  }
+  // If there are any products added, create a new cart based on the stored session
+  var cart = new Cart(req.session.cart);
+  res.render('cart', {
+    products: cart.getItems(),      // Initiates array from cart.js cart.getItems function
+    totalPrice: cart.totalPrice
+  });
    
-// });
-
-// app.get('/remove/:id', function(req, res, next) {
-//   var productId = req.params.id;
-//   var cart = new Cart(req.session.cart ? req.session.cart : {});
-
-//   cart.remove(productId);
-//   req.session.cart = cart;
-//   res.redirect('/cart');
-// });
+});
 
 
 
+app.get('/remove/:id', function(req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
 
+  cart.remove(productId);
+  req.session.cart = cart;
+  res.redirect('/cart');
+});
+
+
+//////////////////// Checkout ////////////////////////////////////
+
+app.get('/checkout', function(req, res, next) {
+      if (!req.session.cart) {              //check if there are products in the cart or not 
+        return res.redirect('/cart');
+  }
+  var cart = new Cart(req.session.cart);
+  res.render('checkout', {total: cart.totalPrice});
+});
 
 
 // This code provides the server port for the application to run on

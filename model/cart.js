@@ -5,10 +5,11 @@ module.exports = function Cart(cart) {  //create Cart constructor function, modu
 
 // add new items to the shopping cart 
     this.add = function(item, id) {
+        //console.log("item:",item)
         var cartItem = this.items[id]; 
         // check to see if the item added to cart is already there 
         if (!cartItem) {    // if not, create a new item
-            cartItem = this.items[id] = {item: item, quantity: 0, price: 0};
+            cartItem = this.items[id] = {item: item, quantity: 0, price: 0}; // Use <%= item.item.JSON object %> in ejs
         }
         cartItem.quantity++;    // increase quantity by 1
         cartItem.price = cartItem.item.price * cartItem.quantity;   // calculate the price of the item by the quantity  
@@ -29,6 +30,7 @@ module.exports = function Cart(cart) {  //create Cart constructor function, modu
         for (var id in this.items) {
             arr.push(this.items[id]);
         }
+        console.log(arr)
         return arr;
     };
 };

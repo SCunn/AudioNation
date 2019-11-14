@@ -1,13 +1,46 @@
 [
  {
-  "Id": 1,
-  "Artist": "Shane",
+  "id": 1,
+  "artist": "Shane",
   "Album": "Just testing the JSON",
-  "Image": "blogs.jpg",
+  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
   "Genre": "Shane",
   "Quality": "Shane",
   "Info": "Just testing the JSON",
-  "Price": 12.50,
+  "price": 12.50,
+  "Purpose": "Buy Now!"
+ },
+ {
+ "id": 2,
+  "artist": "Shane",
+  "Album": "Just testing the JSON",
+  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
+  "Genre": "Shane",
+  "Quality": "Shane",
+  "Info": "Just testing the JSON",
+  "price": 12.50,
+  "Purpose": "Buy Now!"
+ },
+ {
+ "id": 3,
+  "artist": "Shane",
+  "Album": "Just testing the JSON",
+  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
+  "Genre": "Shane",
+  "Quality": "Shane",
+  "Info": "Just testing the JSON",
+  "price": 12.50,
+  "Purpose": "Buy Now!"
+ },
+ {
+ "id": 4,
+  "artist": "Shane",
+  "Album": "Just testing the JSON",
+  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
+  "Genre": "Shane",
+  "Quality": "Shane",
+  "Info": "Just testing the JSON",
+  "price": 12.50,
   "Purpose": "Buy Now!"
  }
 ]

@@ -22,23 +22,25 @@
       <div id="item-cont">
         
         <% products.forEach(function(item) { %>
-         <div><a href="/item/<%= item.Id %>" >View</a> </div>
-         <div><a href="/delete/<%= item.Id %>" >Delete</a> </div>
-         <div><a href="/edititem/<%= item.Id %>" >Edit</a> </div>
-         <div><a href="/addtocart/<%= item.Id %>" >Add to Cart</a> </div>
+         <!--<div>-->
+         <!--  <a class="btn btn-primary" href="/item/<%= item.id %>" >View</a> </div>-->
+         <!--  <div><a class="btn btn-primary" href="/delete/<%= item.id %>" >Delete</a> </div>-->
+         <!--  <div><a class="btn btn-primary" href="/edititem/<%= item.id %>" >Edit</a> </div>-->
+           <div style="padding-bottom: 1%"><a class="btn btn-primary" href="/addtocart/<%= item.id %>" >Add to Cart</a> </div>
         <figure class="snip1423">
           <img src="/<%= item.Image %>" />
           <figcaption>
-            <h3><%= item.Artist %></h3>
+            <h3><%= item.artist %></h3>
             <h3><%= item.Album %></h3>
              <h4><%= item.Genre %></h4>
             <p><%= item.Info %></p>
             <div class="price">
-              <%= item.Price %>
+              &euro; <%= parseFloat(item.price).toFixed(2) %>
             </div>
             <p><%= item.Purpose %></p>
           </figcaption><i class="ion-android-cart"></i>
         </figure>
+        
        
         
         
