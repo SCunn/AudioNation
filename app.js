@@ -4,6 +4,11 @@ var app = express();    // declaration of the app
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var localStorage = require('node-localstorage');
+var flash = require('connect-flash');
+var bcrypt = require('bcrypt-nodejs');
 
 const util = require('util');
 
@@ -49,29 +54,29 @@ app.use(fileUpload());
 
 // -----------SQL with Gearhost database-----------
 
-// const db = mysql.createConnection({
-//     host: 'den1.mysql3.gear.host',  //address where the mySQL database is hosted
-//     user: 'audionation',
-//     password: 'Pe9o4zcizy?~',
-//     database: 'AUDIONATION'
-// });
+const db = mysql.createConnection({
+    host: 'den1.mysql3.gear.host',  //address where the mySQL database is hosted
+    user: 'audionation',
+    password: 'Pe9o4zcizy?~',
+    database: 'AUDIONATION'
+});
 
 // // the next section creates the connnection to the database
 
-// db.connect((err) =>{
-//     if(err){
-//         console.log("go back and check the connection details. Something is wrong.") // console.log is used instead of crashing the app
-//         // throw(err)
-//     } else {
-//         console.log('database connected')
-//     }
-// });
+db.connect((err) =>{
+    if(err){
+        console.log("go back and check the connection details. Something is wrong.") // console.log is used instead of crashing the app
+        // throw(err)
+    } else {
+        console.log('database connected')
+    }
+});
 
 // this route will create a database table
 
 // app.get('/createtable',function(req,res){
 // //     // Create a table that will show Item Id, artist name, album name, image, genre, condition, description, sale type
-//     let sql = 'CREATE TABLE products (Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, Artist varchar(255), Album varchar(255), Image varchar(255), Genre varchar(255), Quality varchar(255), Info varchar(255), Price int, Purpose varchar(255))';
+//     let sql = 'CREATE TABLE products (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, artist varchar(255), album varchar(255), image varchar(255), genre varchar(255), quality varchar(255), info varchar(255), price int, purpose varchar(255))';
        
     
        
@@ -87,11 +92,23 @@ app.use(fileUpload());
     
 //  })
 
+//CREATE TABLE users Id username, email, password
+
+// app.get('/createusers', function(req, res){
+// let sql = 'CREATE TABLE users (Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, username varchar(255), email varchar(255), password varchar(255));'
+// let query = db.query(sql, (err,res) => {
+//  if(err) throw err;
+//  console.log(res);
+// });
+    
+// res.send("USER TABLe created");
+// });
+
+
 //          !!!!!!!!!!!!   drop table  !!!!!!!!!!!!!!!!!
 
 // app.get('/droptable',function(req,res){
-    
-//     let sql = 'DROP TABLE products';
+//     let sql = 'DROP TABLE tablename';
     
 //     let query = db.query(sql, (err,res) => {
         
@@ -143,7 +160,7 @@ console.log("Home Page Loaded"); // used to output activity in the console
 
 
 
-//===========SQL===============================================
+//===========CRUD products JSON===============================================
 
 app.get('/items', function(req,res) {
     
@@ -169,83 +186,84 @@ app.get('/additem', function(req, res) {
 });
 
 
-// // post request from the additem.ejs form to database table products
-// app.post('/additem', function(req, res) {
+// post request from the additem.ejs form to database table products
+app.post('/additem', function(req, res) {
     
-//     let sampleFile = req.files.sampleFile;
-//     filename = sampleFile.name;
+     let sampleFile = req.files.sampleFile;
+    image = sampleFile.name;
     
-//     sampleFile.mv('./images/' + filename, function(err){
+    sampleFile.mv('./images/' + image, function(err){
         
-//         if(err)
+        if(err)
         
-//         return res.status(500).send(err);
-//         console.log("Image you are uploading is " + filename)
-        
-//     })
+        return res.status(500).send(err);
+        console.log("Image you are uploading is " + image)
+       // res.redirect('/');
+    });
    
-//   function getBigId(records, id){ //function getBigId with parameters records and id
-//       var bIg;
+  function getBigId(records, id){ //function getBigId with parameters records and id
+      var bIg;
       
-//       for(var i = 0; i < records.length; i++){ // loops through the item in the JSON file as long as there are records 
-//          if(!bIg || parseInt(item[i][id]) > parseInt(bIg[id])); 
-//          bIg = records[i];
-//       }
-//       return bIg;
-//   }
-// //   // Insert into table that will show Artist, Album, image, genre, condition, description, price, sale type
-// //   let sql = 'INSERT INTO products (Artist, Album, Image, Genre, Quality, Info, Price, Purpose) VALUES("'+req.body.artist+'", "'+req.body.album+'", "'+filename+'", "'+req.body.genre+'", "'+req.body.quality+'", "'+req.body.information+'", '+req.body.price+', "'+req.body.purpose+'")';
-   
-// //   let query = db.query(sql, (err,res) => {
-       
-// //       if(err) throw err;
-       
-// //       console.log(res);
-// //   });
+      for(var i = 0; i < records.length; i++){ // loops through the item in the JSON file as long as there are records 
+         if(!bIg || parseInt(products[i][id]) > parseInt(bIg[id])); 
+         bIg = records[i];
+      }
+      return bIg;
+  }
 
-//     // create a new id for the next JSON item
-//   bigUid = getBigId(item, "id"); // calls the getBigId function from above and passes in parameters 
+
+    // create a new id for the next JSON item
+  bigUid = getBigId(products, "id"); // calls the getBigId function from above and passes in parameters 
    
-//   var add_Id = bigUid.id + 1; // add an id number + 1 larger than the previous id number
+  var add_Id = bigUid.id + 1; // add an id number + 1 larger than the previous id number
    
-//   // display result in the console
-//   console.log("The New ID is" + add_Id);
+  // display result in the console
+  console.log("The New ID is" + add_Id);
    
-//   // this section accesses what the user types in the form and passes the infromation
-//   //to the JSON file as new data
+  // this section accesses what the user types in the form and passes the infromation
+  //to the JSON file as new data
    
-//   var item_New = { 
+  var item_New = { 
       
-//       id: add_Id, 
-//       artist: req.body.artist, 
-//       album: req.body.album, 
-//       image: filename,
-//       genre: req.body.genre,
-//       quality: req.body.quality,
-//       info: req.body.information,
-//       price: req.body.price,
-//       purpose: req.body.purpose
-//   }
+      id: add_Id, 
+      artist: req.body.artist, 
+      album: req.body.album, 
+      image: image,
+      genre: req.body.genre,
+      quality: req.body.quality,
+      info: req.body.information,
+      price: req.body.price,
+      purpose: req.body.purpose
+  }
    
-//   fs.readFile('./data/products.json', 'utf8',  function readfileCallback(err){
+  fs.readFile('./data/products.json', 'utf8',  function readfileCallback(err){
         
-//         if(err) {
-//             throw(err)
+        if(err) {
+            throw(err)
             
-//         } else {
+        } else {
             
-//             item.push(item_New); // add the new data to the JSON file
-//             json = JSON.stringify(item, null, 9); // this line structures the JSON so it is easy on the eye
-//             fs.writeFile('./data/products.json',json, 'utf8');
+            products.push(item_New); // add the new data to the JSON file
+            json = JSON.stringify(products, null, 9); // this line structures the JSON so it is easy on the eye
+            fs.writeFile('./data/products.json',json, 'utf8');
             
-//         }
+        }
         
-//   });
+  });
    
-//     res.redirect('/profile');
-// });
+    res.redirect('/profile');
+});
 
 app.get('/edititem/:id', function(req, res) {
+    
+    // build the information based on changes made by the user
+   function chooseItem(mainOne){
+     return mainOne.id === parseInt(req.params.id) 
+   };
+   
+   var mainOne = products.filter(chooseItem);
+   
+   res.render("edititem", {res:mainOne});
     
     // let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'"';
     
@@ -267,54 +285,82 @@ app.get('/edititem/:id', function(req, res) {
 app.post('/edititem/:id', function(req, res) {
     
     
-     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    // let sampleFile = req.files.sampleFile;
-    // filename = sampleFile.name;
+    //The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let sampleFile = req.files.sampleFile;
+    image = sampleFile.name;
     
-    // //use the mv() method to place the file somewhere on the server
-    // sampleFile.mv('./images/' + filename, function(err){
+    //use the mv() method to place the file somewhere on the server
+    sampleFile.mv('./images/' + image, function(err){
         
-    //     if(err)
+        if(err)
         
-    //     return res.status(500).send(err);
-    //     console.log("Image you are uploading is " + filename)
-    //   // res.redirect('/');
-    // });    
+        return res.status(500).send(err);
+        console.log("Image you are uploading is " + image)
+      // res.redirect('/');
+    });    
     
+     // stringify the JSON data so it can be called as a variable and modified when needed
+      var json = JSON.stringify(products);
+      
+   //declare the incoming id from the url as a variable
+      var keyFind = parseInt(req.params.id);
+   
+   
+   // use predetermined JavaScript functionality to map the data and find the information needed
+      var index = products.map(function(products) {return products.id}).indexOf(keyFind);
     
-    // // Update the sql database table called products
-    // let sql = 'UPDATE products SET Artist = " '+req.body.artist+' ", Album = "'+req.body.album+'", Image = "'+filename+'", Genre = "'+req.body.genre+'", Quality = "'+req.body.quality+'", Info = "'+req.body.information+'", Price = '+req.body.price+', Purpose = "'+req.body.purpose+'" WHERE Id = "'+req.params.id+'" ';
+   // These lines collect content from the body where the user fills in the form
     
-    // let query = db.query(sql, (err,res) => {
-        
-    //     if(err) throw err;
-        
-    //     console.log(res);
-        
-    // });
+      var a = parseInt(req.params.id);
+      var b = req.body.artist;
+      var c = req.body.album;
+      var d = image;
+      var e = req.body.genre;
+      var f = req.body.quality;
+      var g = req.body.information;
+      var h = req.body.price;
+      var i = req.body.purpose;
     
-    // res.redirect('/items');
+   // The next section pushes new data to the json
     
+      products.splice(index, 1, {artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, id: a });
+      
+   // this reformats the JSON and pushes it back to the file 
+      json = JSON.stringify(products, null, 9); // Structures the JSON to be more legible
+      fs.writeFile('./data/products.json',json, 'utf8', function(){});
+      
+      res.redirect("/items");
+
    
 });
 
 
-// Url to see individual product
+// // Url to see individual product
 app.get('/item/:id', function(req,res){
-    // Create a table that will show product Id, name, price, image and sporting activity
-    //let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'" ';
     
-    // let query = db.query(sql, (err,result) => {
+    // build the information based on changes made by the user
+   function chooseItem(mainOne){
+     return mainOne.id === parseInt(req.params.id) 
+   }
+   
+   var mainOne = products.filter(chooseItem);
+   
+   res.render("item", {res:mainOne});
+   
+//     // Create a table that will show product Id, name, price, image and sporting activity
+//     let sql = 'SELECT * FROM products WHERE id = "'+req.params.id+'" ';
+    
+//     let query = db.query(sql, (err,result) => {
         
-    //     if(err) throw err;
+//         if(err) throw err;
         
-    //     console.log(res);
-    //     res.render('items', {result})
-    // });
+//         console.log(res);
+//         res.render('items', {result})
+//     });
     
    
     
-})
+});
 
 
 
@@ -335,7 +381,25 @@ app.get('/delete/:id', function(req,res){
     // });
     
     //res.redirect('/items');
+       // firstly we need to stringify our JSON data so it can be call as a variable an modified as needed
+    var json = JSON.stringify(products);
     
+    // declare the incoming id from the url as a variable 
+    var keyToFind = parseInt(req.params.id);
+    
+    // use predetermined JavaScript functionality to map the data and find the information I need 
+    var index = products.map(function(products) {return products.id}).indexOf(keyToFind);
+    
+
+    products.splice(index, 1);
+    
+  
+    
+    // now we reformat the JSON and push it back to the actual file
+    json = JSON.stringify(products, null, 9); // this line structures the JSON so it is easy on the eye
+    fs.writeFile('./data/products.json',json, 'utf8', function(){});
+    
+    res.redirect("/items"); 
     
 })
 
@@ -405,13 +469,13 @@ app.get('/remove/:id', function(req, res, next) {
 
 //////////////////// Checkout ////////////////////////////////////
 
-app.get('/checkout', function(req, res, next) {
-      if (!req.session.cart) {              //check if there are products in the cart or not 
-        return res.redirect('/cart');
-  }
-  var cart = new Cart(req.session.cart);
-  res.render('checkout', {total: cart.totalPrice});
-});
+// app.get('/checkout', function(req, res, next) {
+//       if (!req.session.cart) {              //check if there are products in the cart or not 
+//         return res.redirect('/cart');
+//   }
+//   var cart = new Cart(req.session.cart);
+//   res.render('checkout', {total: cart.totalPrice});
+// });
 
 
 // This code provides the server port for the application to run on

@@ -1,46 +1,35 @@
 [
- {
-  "id": 1,
-  "artist": "Shane",
-  "Album": "Just testing the JSON",
-  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-  "Genre": "Shane",
-  "Quality": "Shane",
-  "Info": "Just testing the JSON",
-  "price": 12.50,
-  "Purpose": "Buy Now!"
- },
- {
- "id": 2,
-  "artist": "Shane",
-  "Album": "Just testing the JSON",
-  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-  "Genre": "Shane",
-  "Quality": "Shane",
-  "Info": "Just testing the JSON",
-  "price": 12.50,
-  "Purpose": "Buy Now!"
- },
- {
- "id": 3,
-  "artist": "Shane",
-  "Album": "Just testing the JSON",
-  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-  "Genre": "Shane",
-  "Quality": "Shane",
-  "Info": "Just testing the JSON",
-  "price": 12.50,
-  "Purpose": "Buy Now!"
- },
- {
- "id": 4,
-  "artist": "Shane",
-  "Album": "Just testing the JSON",
-  "Image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-  "Genre": "Shane",
-  "Quality": "Shane",
-  "Info": "Just testing the JSON",
-  "price": 12.50,
-  "Purpose": "Buy Now!"
- }
+         {
+                  "artist": "Soundgarden",
+                  "album": "Badmoterfinger",
+                  "image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
+                  "genre": "Alt rock/ Alt metal/ Grunge / 90's",
+                  "quality": "Used",
+                  "information": "",
+                  "price": "12.5",
+                  "purpose": "For Sale",
+                  "id": 1000
+         },
+         {
+                  "artist": "Metalica",
+                  "album": "Master of Puppets",
+                  "image": "mop.jpg",
+                  "genre": "Thrash metal",
+                  "quality": "Used",
+                  "information": "",
+                  "price": "10.50",
+                  "purpose": "Auction",
+                  "id": 1001
+         },
+         {
+                  "id": 1002,
+                  "artist": "Prodigy",
+                  "album": "Experience",
+                  "image": "prodigy_exper.jpg",
+                  "genre": "Old School Dance / Hardcore ",
+                  "quality": "New",
+                  "info": "",
+                  "price": "10.50",
+                  "purpose": "For Sale"
+         }
 ]

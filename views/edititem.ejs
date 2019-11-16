@@ -9,57 +9,57 @@
                         <div class="card-body">
                             
                             
-                    <% result.forEach(function(item) { %>
+                    <% res.forEach(function(mainOne) { %>
                     
                             
-                            <form accept-charset="UTF-8" style="" action="/edititem/<%= item.Id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
+                            <form accept-charset="UTF-8" style="" action="/edititem/<%= mainOne.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
                                     
                                 <div class="form-group row">
                                     <label for="artist" class="col-md-4 col-form-label text-md-right">Artist Name</label>
                                     <div class="col-md-6">
-                                        <input name="artist" type="text" class="form-control" placeholder="Enter Artist Name" value="<%= item.Artist %>" />
+                                        <input name="artist" type="text" class="form-control" placeholder="Enter Artist Name" value="<%= mainOne.artist %>" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="album" class="col-md-4 col-form-label text-md-right">Album Name</label>
                                     <div class="col-md-6">
-                                        <input name="album" type="text" class="form-control" placeholder="Enter Album Name" value="<%= item.Album %>" />
+                                        <input name="album" type="text" class="form-control" placeholder="Enter Album Name" value="<%= mainOne.album %>" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="image" class="col-md-4 col-form-label text-md-right">Image</label>
                                     <div class="col-md-6">
-                                         <input type="file" class="btn btn-primary" name="sampleFile" required title="You Must Upload an Image to Continue" />
+                                         <input name="sampleFile" type="file" class="btn btn-primary" required title="You Must Upload an Image to Continue" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="genre" class="col-md-4 col-form-label text-md-right">Genre</label>
                                     <div class="col-md-6">
-                                         <input name="genre" type="text" class="form-control" placeholder="Enter Music Genre" value="<%= item.Genre %>" />
+                                         <input name="genre" type="text" class="form-control" placeholder="Enter Music Genre" value="<%= mainOne.genre %>" />
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="quality" class="col-md-4 col-form-label text-md-right">Condition</label>
                                     <div class="col-md-6">
-                                        <input name="quality" type="text" class="form-control" placeholder="Enter Item Condition" value="<%= item.Quality %>" />
+                                        <input name="quality" type="text" class="form-control" placeholder="Enter Item Condition" value="<%= mainOne.quality %>" />
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
                                     <label for="information" class="col-md-4 col-form-label text-md-right">Description</label>
                                     <div class="col-md-6">
-                                         <textarea name="information" type="text" class="form-control" style="width:100%; height:50px;"  maxlength="255"   title=" 255 Characters max" placeholder="Enter Item Description" value="<%= item.Info %>" ></textarea>
+                                         <textarea name="information" type="text" class="form-control" style="width:100%; height:50px;"  maxlength="255"   title=" 255 Characters max" placeholder="Enter Item Description" value="<%= mainOne.info %>" ></textarea>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
                                     <label for="purpose" class="col-md-4 col-form-label text-md-right">Sale Type</label>
                                     <div class="col-md-6">
-                                        <select value="<%= item.Purpose %>"  name="purpose">
+                                        <select value="<%= mainOne.purpose %>"  name="purpose">
                                              <option>For Sale</option>
                                              <option>Auction</option>
                                              <option>Barter</option>
@@ -72,7 +72,7 @@
                                 <div class="form-group row">
                                     <label for="price" class="col-md-4 col-form-label text-md-right">Price</label>
                                     <div class="col-md-6">
-                                         <input name="price" type="text" class="form-control" placeholder="Enter Item Price" value="<%= item.Price %>">
+                                         <input name="price" type="text" class="form-control" placeholder="Enter Item Price" value="<%= mainOne.price %>">
                                     </div>
                                 </div>
                                

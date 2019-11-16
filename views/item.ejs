@@ -1,0 +1,96 @@
+<!-- Bootstrap template from https://startbootstrap.com/snippets/portfolio-item/-->
+
+<% include ../partials/header %>
+
+
+ <% res.forEach(function(item) { %>
+         
+           
+        <!--<figure class="snip1423">-->
+         
+        <!--  <figcaption>-->
+        <!--    <h3><%= item.artist %></h3>-->
+        <!--    <h3><%= item.album %></h3>-->
+        <!--     <h4><%= item.genre %></h4>-->
+        <!--    <p><%= item.info %></p>-->
+        <!--    <div class="price">-->
+        <!--      &euro; <%= parseFloat(item.price).toFixed(2) %>-->
+        <!--    </div>-->
+        <!--    <p><%= item.purpose %></p>-->
+        <!--  </figcaption><i class="ion-android-cart"></i>-->
+        <!--</figure>-->
+        
+       
+        
+        
+        
+                    
+            <!-- Page Content -->
+            <div class="container">
+            
+              <!-- Portfolio Item Heading -->
+              <h1 class="my-4"><%= item.album %>
+                <small>By <%= item.artist %></small>
+              </h1>
+            
+              <!-- Portfolio Item Row -->
+              <div class="row">
+            
+                <div class="col-md-8">
+                  <img style="width:100%" class="img-fluid" src="/<%= item.image %>" alt="">
+                </div>
+            
+                <div class="col-md-4">
+                  <h3 class="my-3">Product Description</h3>
+                  <p><%= item.info %></p>
+                  <h3 class="my-3">Details</h3>
+                  <ul>
+                    <li>Lorem Ipsum</li>
+                    <li><%= item.genre %></li>
+                    <li><%= item.purpose %></li>
+                    <li>&euro; <%= parseFloat(item.price).toFixed(2) %></li>
+                  </ul>
+                </div>
+            
+              </div>
+              <!-- /.row -->
+ <% }); %>
+
+  <!-- Related Projects Row -->
+  <h3 class="my-4">Related Projects</h3>
+
+  <div class="row">
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+
+
+<% include ../partials/footer %>
