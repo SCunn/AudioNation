@@ -1,3 +1,5 @@
+// cart.js from https://github.com/auchenberg/nodejs-shopping-cart
+
 module.exports = function Cart(cart) {  //create Cart constructor function, module.exports makes code available when called elsewhere
     this.items = cart.items || {};
     this.totalItems = cart.totalItems || 0;
@@ -29,6 +31,7 @@ module.exports = function Cart(cart) {  //create Cart constructor function, modu
         var arr = [];
         for (var id in this.items) {
             arr.push(this.items[id]);
+            
         }
         console.log(arr)
         return arr;

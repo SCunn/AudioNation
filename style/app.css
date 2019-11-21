@@ -41,6 +41,18 @@ header.masthead h1 {
   font-size: 2rem;
 }
 
+/* Responsive NavBar */
+
+
+
+#navMenuDrop {
+	display: none;
+}
+
+#flip {
+	float: right;
+}
+
 @media (min-width: 768px) {
   header.masthead {
     padding-top: 12rem;
@@ -49,6 +61,11 @@ header.masthead h1 {
   header.masthead h1 {
     font-size: 3rem;
   }
+  
+  #flip {
+	display: none;
+}
+  
 }
 
 .showcase .showcase-text {
@@ -59,6 +76,8 @@ header.masthead h1 {
   min-height: 30rem;
   background-size: cover;
 }
+
+
 
 @media (min-width: 768px) {
   .showcase .showcase-text {
