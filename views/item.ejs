@@ -5,25 +5,6 @@
 
  <% res.forEach(function(item) { %>
          
-           
-        <!--<figure class="snip1423">-->
-         
-        <!--  <figcaption>-->
-        <!--    <h3><%= item.artist %></h3>-->
-        <!--    <h3><%= item.album %></h3>-->
-        <!--     <h4><%= item.genre %></h4>-->
-        <!--    <p><%= item.info %></p>-->
-        <!--    <div class="price">-->
-        <!--      &euro; <%= parseFloat(item.price).toFixed(2) %>-->
-        <!--    </div>-->
-        <!--    <p><%= item.purpose %></p>-->
-        <!--  </figcaption><i class="ion-android-cart"></i>-->
-        <!--</figure>-->
-        
-       
-        
-        
-        
                     
             <!-- Page Content -->
             <div class="container">
@@ -55,41 +36,111 @@
               </div>
               <!-- /.row -->
  <% }); %>
+ 
+ <% res.forEach(function(item) { %>
+ <form accept-charset="UTF-8" style="" action="/bid/<%= item.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
+    
+    <div class="form-group row">
+       
+        <div class="col-md-6">
+            <input name="artist" type="hidden" class="form-control" placeholder="Enter Artist Name" value="<%= item.artist %>" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        
+        <div class="col-md-6">
+            <input name="album" type="hidden" class="form-control" placeholder="Enter Album Name" value="<%= item.album %>" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        
+        <div class="col-md-6">
+             <input name="image" type="hidden" class="form-control" value="<%= item.image %>"/>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        
+        <div class="col-md-6">
+             <input name="genre" type="hidden" class="form-control" placeholder="Enter Music Genre" value="<%= item.genre %>" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-md-6">
+            <input name="quality" type="hidden" class="form-control" placeholder="Enter Item Condition" value="<%= item.quality %>" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-md-6">
+             <input name="information" type="hidden" value="<%= item.info %>" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-md-6">
+            <input type="hidden" value="<%= item.purpose %>"  name="purpose" />
+                
+            
+            
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-md-4 col-form-label text-md-right">Place Bid</label>
+        <div class="col-md-6">
+             <input name="price" type="text" class="form-control" placeholder="Enter Item Price" value="<%= item.price %>">
+        </div>
+    </div>
+     <div class="col-md-6 offset-md-4">
+        <button class="btn btn-primary">Place Bid!</button>
+    </div>
+ </form>
+<% }); %>
+
+
 
   <!-- Related Projects Row -->
-  <h3 class="my-4">Related Projects</h3>
+<!--  <h3 class="my-4">Related Projects</h3>-->
 
-  <div class="row">
+<!--  <div class="row">-->
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
+<!--    <div class="col-md-3 col-sm-6 mb-4">-->
+<!--      <a href="#">-->
+<!--            <img class="img-fluid" src="http://placehold.it/500x300" alt="">-->
+<!--          </a>-->
+<!--    </div>-->
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
+<!--    <div class="col-md-3 col-sm-6 mb-4">-->
+<!--      <a href="#">-->
+<!--            <img class="img-fluid" src="http://placehold.it/500x300" alt="">-->
+<!--          </a>-->
+<!--    </div>-->
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
+<!--    <div class="col-md-3 col-sm-6 mb-4">-->
+<!--      <a href="#">-->
+<!--            <img class="img-fluid" src="http://placehold.it/500x300" alt="">-->
+<!--          </a>-->
+<!--    </div>-->
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
+<!--    <div class="col-md-3 col-sm-6 mb-4">-->
+<!--      <a href="#">-->
+<!--            <img class="img-fluid" src="http://placehold.it/500x300" alt="">-->
+<!--          </a>-->
+<!--    </div>-->
 
-  </div>
+<!--  </div>-->
   <!-- /.row -->
 
-</div>
+<!--</div>-->
 <!-- /.container -->
+
+
+
+
+
 
 
 

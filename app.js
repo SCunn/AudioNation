@@ -14,6 +14,7 @@ const paypal = require('paypal-rest-sdk');
 
 const util = require('util');
 
+
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'AQvhMK-UIHWBkJTiGzpN4GMJWxm_nplLW11dqNpX2BHzSbZGmhcc7QYh8-bLn-84IMdtPjx09qBmlcoW',
@@ -56,6 +57,9 @@ var mysql = require('mysql');
 var fs = require('fs');  // The Node.js file system module allows you to work with the file system on your computer.
 var bodyParser = require("body-parser"); // call body parser module and make use of it
 app.use(bodyParser.urlencoded({extended:true}));
+
+
+
 
 
 
@@ -241,25 +245,45 @@ app.post('/additem', function(req, res) {
   
   ///////
   
-  let sql = 'SELECT * FROM users WHERE Id =  "'+req.params.Id+'" ';
+  
+  let sql = 'SELECT Id FROM users WHERE Id =  "'+req.params.Id+'" ';
   
   let query = db.query(sql, (err,res) => {
         
         if(err) throw err;
         
-        console.log(res);
-        
+        console.log(res);  // sessionID: 'oby9LorrAd5wk_t5MBciAjK4x0oMRcN4',
+                            //  session: Session { cookie: [Object], passport: [Object] },
+                            //  _passport: { instance: [Object], session: [Object] },
+                            //  user: 
+                            //   RowDataPacket {
+                            //     Id: ,
+                            //     username: '',
+                            //     email: '',
+                            //     password: '',
+                            //     admin:  },
+       
     });
-    
-   var user_id = parseInt(query); 
+       
+    console.log(util.inspect(res, false, null, true ));
+     //console.log(res);
+     
+     Id = res.Id;
+      // stringify the JSON data so it can be called as a variable and modified when needed
+      //var json = JSON.stringify(res);
+      
+   //declare the incoming id from the url as a variable
+      //var keyFind = parseInt(req.params.Id);
    
+   // use predetermined JavaScript functionality to map the data and find the information needed
+    // var index_user = user.map(function(Users) {return Users.Id}).indexOf(keyFind);
    
   // this section accesses what the user types in the form and passes the infromation
   //to the JSON file as new data
    
   var item_New = { 
       
-      user_id: req.body.user_id,
+      Id: parseInt(res.Id),
       id: add_Id, 
       artist: req.body.artist, 
       album: req.body.album, 
@@ -286,7 +310,7 @@ app.post('/additem', function(req, res) {
         
   });
    
-    res.redirect('/profile');
+    res.redirect('/items');
 });
 
 
@@ -365,6 +389,40 @@ app.post('/edititem/:id', function(req, res) {
    
 });
 
+app.post('/bid/:id', function(req, res) {
+         // stringify the JSON data so it can be called as a variable and modified when needed
+      var json = JSON.stringify(products);
+      
+   //declare the incoming id from the url as a variable
+      var keyFind = parseInt(req.params.id);
+   
+   
+   // use predetermined JavaScript functionality to map the data and find the information needed
+      var index = products.map(function(products) {return products.id}).indexOf(keyFind);
+    
+   // These lines collect content from the body where the user fills in the form
+    
+      var a = parseInt(req.params.id);
+      var b = req.body.artist;
+      var c = req.body.album;
+      var d = req.body.image;
+      var e = req.body.genre;
+      var f = req.body.quality;
+      var g = req.body.information;
+      var h = req.body.price;
+      var i = req.body.purpose;
+    
+   // The next section pushes new data to the json
+    
+      products.splice(index, 1, {artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, id: a });
+      
+   // this reformats the JSON and pushes it back to the file 
+      json = JSON.stringify(products, null, 9); // Structures the JSON to be more legible
+      fs.writeFile('./data/products.json',json, 'utf8', function(){});
+      
+      res.redirect("/item/:id");
+})
+
 
 // // Url to see individual product
 app.get('/item/:id', function(req,res){
@@ -412,7 +470,7 @@ app.get('/delete/:id', function(req,res){
 
 app.get('/profile', isLoggedIn, function(req, res) {
     
-    //var productId = products && products[0].id;
+    var productId = products && products[0].id;
 //     function chooseItem(mainOne){
 //      return mainOne.id === parseInt(req.params.users_id) 
 //   }
