@@ -246,7 +246,7 @@ app.post('/additem', function(req, res) {
   ///////
   
   
-  let sql = 'SELECT Id FROM users WHERE Id =  "'+req.params.Id+'" ';
+  let sql = 'SELECT * FROM users WHERE Id =  "'+req.user.Id+'" ';
   
   let query = db.query(sql, (err,res) => {
         
@@ -265,25 +265,12 @@ app.post('/additem', function(req, res) {
        
     });
        
-    console.log(util.inspect(res, false, null, true ));
-     //console.log(res);
-     
-     Id = res.Id;
-      // stringify the JSON data so it can be called as a variable and modified when needed
-      //var json = JSON.stringify(res);
-      
-   //declare the incoming id from the url as a variable
-      //var keyFind = parseInt(req.params.Id);
+    //console.log(util.inspect(res, false, null, true ));
    
-   // use predetermined JavaScript functionality to map the data and find the information needed
-    // var index_user = user.map(function(Users) {return Users.Id}).indexOf(keyFind);
-   
-  // this section accesses what the user types in the form and passes the infromation
-  //to the JSON file as new data
    
   var item_New = { 
       
-      Id: parseInt(res.Id),
+      Id: parseInt(req.user.Id),
       id: add_Id, 
       artist: req.body.artist, 
       album: req.body.album, 
@@ -294,6 +281,8 @@ app.post('/additem', function(req, res) {
       price: req.body.price,
       purpose: req.body.purpose
   }
+  
+  //parseFloat(item.price).toFixed(2)
    
   fs.readFile('./data/products.json', 'utf8',  function readfileCallback(err){
         
@@ -304,7 +293,7 @@ app.post('/additem', function(req, res) {
             
             products.push(item_New); // add the new data to the JSON file
             json = JSON.stringify(products, null, 10); // this line structures the JSON so it is easy on the eye
-            fs.writeFile('./data/products.json',json, 'utf8');
+            fs.writeFile('./data/products.json',json, 'utf8', function(err){ console.log(err)});
             
         }
         
@@ -727,47 +716,62 @@ app.post('/pay', (req, res) => {
         payment_method:'paypal'
       },
       redirect_urls:{
-        return_url:'http://localhost:3000/process',
+        return_url:'http://localhost:3000/success',
         cancel_url:'http://localhost:3000/cancel'
       },
       transactions:[{
         amount:{
-          total:'10',
-          currency:'USD'
+          total:'10.00',
+          currency:'EUR'
         },
         description:'This is the payment transaction description.'
     }]
     });
  
- 
-    paypal.payment.create(create_payment_json, function (error, payment) {
-            var links = {};
+ paypal.payment.create(create_payment_json, function (error, payment) {
+     var links = {};
             
-              if(error){
-                console.error(JSON.stringify(error));
-              } else {
-                // Capture HATEOAS links
-                payment.links.forEach(function(linkObj){
-                  links[linkObj.rel] = {
-                    href: linkObj.href,
-                    method: linkObj.method
-                  };
-                })
-            
-                // If the redirect URL is present, redirect the customer to that URL
-                if (links.hasOwnProperty('approval_url')){
-                  // Redirect the customer to links['approval_url'].href
-                } else {
-                  console.error('no redirect URI present');
-                }
+      if(error){
+        console.error(JSON.stringify(error));
+      } else {
+          for(let i = 0; i < payment.links.length; i++){
+              if(payment.links[i].rel === 'approval_url'){
+                  res.redirect(payment.links[i].href);
               }
-            });
-     
-     res.redirect('/');  
-            
+          }
+      }  
+  });
 });
 
+app.get('/success', function(req, res) {
+    const payerId = req.query.PayerID;           // request PayerId & paymentId params from paypal api
+    const paymentId = req.query.paymentId;
+    
+    var execute_payment_json = {
+    payer_id: payerId,
+    transactions: [{
+        amount: {
+            currency: 'EUR',
+            total: '10.00'
+            }
+        }]
+    };
 
+    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+        //console.log("Get Payment Response");
+        console.log(JSON.stringify(payment));
+         res.redirect('success', {execute_payment_json});
+        }
+    });
+});
+
+app.get('/cancel', function(req, res){
+    res.redirect('/');
+})
 
 
 

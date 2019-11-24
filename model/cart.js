@@ -17,7 +17,7 @@ module.exports = function Cart(cart) {  //create Cart constructor function, modu
         cartItem.price = cartItem.item.price * cartItem.quantity;   // calculate the price of the item by the quantity  
         // This section updates the total quantity and price
         this.totalItems++;
-        this.totalPrice += cartItem.item.price;
+        this.totalPrice += parseFloat(cartItem.item.price);
     };
 
     this.remove = function(id) {

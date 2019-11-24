@@ -1,0 +1,83 @@
+<% include ../partials/header %>
+
+<div class="mainCont">
+<h2>Thank you</h2>
+
+
+
+<table id="customers">
+    <tr>
+    @orders.limit().order(id: :desc).each do |order|
+    
+    <td>Order you just placed is : order.id</td>
+    
+    
+    </tr>
+    
+</table>
+
+
+<table id="customers">
+    
+    <tr>
+    
+    <!--item = Orderitem.find_by_id(id)-->
+    
+    <td> title </td>
+    <td>quantity </td>
+    <td>price</td>
+    <td>number_to_currency(item.quantity * item.price, :unit=>"€")</td>
+    
+    </tr>
+    
+    linetotal = 0
+    linetotal 
+    
+    
+    <tr>
+        <td>Order Total: &euro; total</td>
+        
+    </tr>
+    
+    
+    <tr>
+        shipping = 25 
+        @grandtotal = shipping + @total 
+        <td>Shipping &euro;25</td>
+        <td>Your Total payable is: @grandtotal </td>
+        
+    </tr>
+</table>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% include ../partials/footer %>
