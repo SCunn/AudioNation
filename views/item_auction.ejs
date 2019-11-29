@@ -25,8 +25,9 @@
                   <h3 class="my-3">Product Description</h3>
                   <p><%= item.info %></p>
                   <h3 class="my-3">Details</h3>
+                  
                   <ul>
-                    <li>Lorem Ipsum</li>
+                   
                     <li><%= item.genre %></li>
                     <li><%= item.purpose %></li>
                     <li>&euro; <%= parseFloat(item.price).toFixed(2) %></li>
@@ -37,13 +38,23 @@
               <!-- /.row -->
  <% }); %>
  
+
+ 
  <% res.forEach(function(item) { %>
+ 
  <form accept-charset="UTF-8" style="" action="/bid/<%= item.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
     
     <div class="form-group row">
        
         <div class="col-md-6">
             <input name="artist" type="hidden" class="form-control" placeholder="Enter Artist Name" value="<%= item.artist %>" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+       
+        <div class="col-md-6">
+            <input name="Id" type="hidden" class="form-control" placeholder="Enter Artist Name" value="<%= item.Id %>" />
         </div>
     </div>
     
@@ -84,23 +95,33 @@
         <div class="col-md-6">
             <input type="hidden" value="<%= item.purpose %>"  name="purpose" />
                 
-            
-            
         </div>
     </div>
+    
+    <div class="form-group row">
+        <div class="col-md-6">
+            <input type="hidden" value="<%= item.duration %>"  name="duration" />
+                
+        </div>
+    </div>
+    
     <div class="form-group row">
         <label for="price" class="col-md-4 col-form-label text-md-right">Place Bid</label>
         <div class="col-md-6">
-             <input name="price" type="text" class="form-control" placeholder="Enter Item Price" value="<%= item.price %>">
+             <input name="price" type="number" class="form-control" placeholder="Enter Item Price" min="<%= parseFloat(item.price) + 1.00%>" value="<%= parseFloat(item.price).toFixed(2) %>" >
         </div>
     </div>
      <div class="col-md-6 offset-md-4">
         <button class="btn btn-primary">Place Bid!</button>
     </div>
  </form>
-<% }); %>
+ 
+
+ <% }); %>
 
 
+    
+   
 
   <!-- Related Projects Row -->
 <!--  <h3 class="my-4">Related Projects</h3>-->

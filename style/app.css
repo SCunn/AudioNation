@@ -276,3 +276,7 @@ body {
     background-color: #4CAF50;
     color: white;
 }
+
+div #showDatetime{
+  display: none;
+}

@@ -10,6 +10,8 @@ var localStorage = require('node-localstorage');
 var flash = require('connect-flash');
 var bcrypt = require('bcrypt-nodejs');
 
+const { TaskTimer } = require('tasktimer');
+
 const paypal = require('paypal-rest-sdk');
 
 const util = require('util');
@@ -201,7 +203,7 @@ app.get('/items', function(req,res) {
 });
 
 // URL to additem.ejs
-app.get('/additem', function(req, res) {
+app.get('/additem', isLoggedIn, function(req, res) {
     
     
    res.render("additem",{});
@@ -210,7 +212,7 @@ app.get('/additem', function(req, res) {
 
 
 // post request from the additem.ejs form to database table products
-app.post('/additem', function(req, res) {
+app.post('/additem', isLoggedIn, function(req, res) {
     
      let sampleFile = req.files.sampleFile;
     image = sampleFile.name;
@@ -279,10 +281,11 @@ app.post('/additem', function(req, res) {
       quality: req.body.quality,
       info: req.body.information,
       price: req.body.price,
-      purpose: req.body.purpose
+      purpose: req.body.purpose,
+      duration: Date.parse(req.body.duration)
   }
   
-  //parseFloat(item.price).toFixed(2)
+  
    
   fs.readFile('./data/products.json', 'utf8',  function readfileCallback(err){
         
@@ -292,7 +295,7 @@ app.post('/additem', function(req, res) {
         } else {
             
             products.push(item_New); // add the new data to the JSON file
-            json = JSON.stringify(products, null, 10); // this line structures the JSON so it is easy on the eye
+            json = JSON.stringify(products, null, 11); // this line structures the JSON so it is easy on the eye
             fs.writeFile('./data/products.json',json, 'utf8', function(err){ console.log(err)});
             
         }
@@ -306,7 +309,7 @@ app.post('/additem', function(req, res) {
 
 
 
-app.get('/edititem/:id', function(req, res) {
+app.get('/edititem/:id', isLoggedIn, function(req, res) {
     
     // build the information based on changes made by the user
    function chooseItem(mainOne){
@@ -326,7 +329,7 @@ app.get('/edititem/:id', function(req, res) {
 // URL to edititem.ejs
 
 
-app.post('/edititem/:id', function(req, res) {
+app.post('/edititem/:id', isLoggedIn, function(req, res) {
     
     
     //The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
@@ -354,7 +357,7 @@ app.post('/edititem/:id', function(req, res) {
       var index = products.map(function(products) {return products.id}).indexOf(keyFind);
     
    // These lines collect content from the body where the user fills in the form
-    
+      var x = parseInt(req.body.Id);
       var a = parseInt(req.params.id);
       var b = req.body.artist;
       var c = req.body.album;
@@ -364,13 +367,14 @@ app.post('/edititem/:id', function(req, res) {
       var g = req.body.information;
       var h = req.body.price;
       var i = req.body.purpose;
+      var j = req.body.duration;
     
    // The next section pushes new data to the json
     
-      products.splice(index, 1, {artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, id: a });
+      products.splice(index, 1, {Id: x, id: a, artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, duration: j });
       
    // this reformats the JSON and pushes it back to the file 
-      json = JSON.stringify(products, null, 9); // Structures the JSON to be more legible
+      json = JSON.stringify(products, null, 11); // Structures the JSON to be more legible
       fs.writeFile('./data/products.json',json, 'utf8', function(){});
       
       res.redirect("/items");
@@ -390,7 +394,7 @@ app.post('/bid/:id', function(req, res) {
       var index = products.map(function(products) {return products.id}).indexOf(keyFind);
     
    // These lines collect content from the body where the user fills in the form
-    
+      var x = parseInt(req.body.Id);   
       var a = parseInt(req.params.id);
       var b = req.body.artist;
       var c = req.body.album;
@@ -400,30 +404,49 @@ app.post('/bid/:id', function(req, res) {
       var g = req.body.information;
       var h = req.body.price;
       var i = req.body.purpose;
+      var j = req.body.duration;
     
    // The next section pushes new data to the json
     
-      products.splice(index, 1, {artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, id: a });
+      products.splice(index, 1, {Id: x, id: a, artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, duration: j });
       
    // this reformats the JSON and pushes it back to the file 
-      json = JSON.stringify(products, null, 9); // Structures the JSON to be more legible
+      json = JSON.stringify(products, null, 11); // Structures the JSON to be more legible
       fs.writeFile('./data/products.json',json, 'utf8', function(){});
       
-      res.redirect("/item/:id");
+      req.flash('Bid', 'New Bid Placed on Your Item ! ' ); 
+      
+      
+      
+      res.redirect("/profile");
 })
 
 
 // // Url to see individual product
-app.get('/item/:id', function(req,res){
+app.get('/item/:id/Auction', function(req,res){
     
     // build the information based on changes made by the user
    function chooseItem(mainOne){
-     return mainOne.id === parseInt(req.params.id) 
+     return mainOne.id === parseInt(req.params.id)
    }
    
    var mainOne = products.filter(chooseItem);
    
-   res.render("item", {res:mainOne});
+   res.render("item_auction", {res:mainOne});
+   
+});
+
+// // Url to see individual product
+app.get('/item/:id/BuyNow', function(req,res){
+
+    // build the information based on changes made by the user
+   function chooseItem(mainOne){
+     return mainOne.id === parseInt(req.params.id)
+   }
+   
+   var mainOne = products.filter(chooseItem);
+   
+   res.render("item_forsale", {res:mainOne});
    
 });
 
@@ -431,7 +454,7 @@ app.get('/item/:id', function(req,res){
 
 
 // URL TO delete a product
-app.get('/delete/:id', function(req,res){
+app.get('/delete/:id', isLoggedIn, function(req,res){
     
 
        // firstly we need to stringify our JSON data so it can be call as a variable an modified as needed
@@ -459,22 +482,34 @@ app.get('/delete/:id', function(req,res){
 
 app.get('/profile', isLoggedIn, function(req, res) {
     
-    var productId = products && products[0].id;
-//     function chooseItem(mainOne){
-//      return mainOne.id === parseInt(req.params.users_id) 
-//   }
+      
+    
+    let sql = 'SELECT * FROM users WHERE Id = "'+req.user.Id+'" ';
+
+    let query = db.query(sql, (err,result) => {
+    // let query = db.query(sql, (err,result) => {
+
+        if(err) throw err;
+    
+       // console.log(res);
+    });
+    
+    var user_Id = parseInt(req.user.Id);
+    
+    console.log(util.inspect(user_Id, false, null, true ));    
+    
+    var product_user_Id = products[0].Id;
    
-//   var mainOne = products.filter(chooseItem);
+     user_Id == product_user_Id;
+    
+     
    
-//   res.render("item", {res:mainOne});
     
-    
-    
-   res.render("profile", {
-       user : req.user, // get the user out of session and pass to template
-       products
-       //item: req.
-   }); 
+  res.render("profile", {
+      messages: req.flash('Bid'),
+      user : req.user, // get the user out of session and pass to template
+      products: product_user_Id
+  }); 
   
 });
 
@@ -561,6 +596,7 @@ app.post('/register', passport.authenticate('local-signup', {
 }));
 
 app.get('/logout', function(req, res) {
+        req.session.destroy();
 		req.logout();
 		res.redirect('/');
 	});
@@ -648,7 +684,7 @@ function isAdmin(req, res, next) {
 ////////////////////// Cart //////////////////////////////////////////////////////////
 
 
-app.get('/addtocart/:id', function(req, res, next) {
+app.get('/addtocart/:id', isLoggedIn, function(req, res, next) {
     
     var productId = req.params.id;
     var cart = new Cart(req.session.cart ? req.session.cart : {});  // New Cart will be created if there is a new Item, else old session is used
@@ -666,7 +702,7 @@ app.get('/addtocart/:id', function(req, res, next) {
 });
 
 
-app.get('/cart', function(req, res, next) {
+app.get('/cart', isLoggedIn, function(req, res, next) {
       if (!req.session.cart) {              //check if there are products in the cart or not 
         return res.render('cart', {
             products: null
@@ -683,7 +719,7 @@ app.get('/cart', function(req, res, next) {
 
 
 
-app.get('/remove/:id', function(req, res, next) {
+app.get('/remove/:id', isLoggedIn, function(req, res, next) {
   var productId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
 
@@ -695,7 +731,7 @@ app.get('/remove/:id', function(req, res, next) {
 
 //////////////////// Checkout ////////////////////////////////////
 
-app.get('/checkout', function(req, res, next) {
+app.get('/checkout', isLoggedIn, function(req, res, next) {
       if (!req.session.cart) {              //check if there are products in the cart or not 
         return res.redirect('/cart');
   }
@@ -706,7 +742,7 @@ app.get('/checkout', function(req, res, next) {
 
 //app.gloabalAmount = 0;
 
-app.post('/pay', (req, res) => {
+app.post('/pay', isLoggedIn, (req, res) => {
     
     //app.globalAmount = req.body.amount;
     
@@ -716,13 +752,13 @@ app.post('/pay', (req, res) => {
         payment_method:'paypal'
       },
       redirect_urls:{
-        return_url:'http://localhost:3000/success',
-        cancel_url:'http://localhost:3000/cancel'
+        return_url:'https://2a662dc734d44318af1f212537ccb95d.vfs.cloud9.eu-west-1.amazonaws.com/success',
+        cancel_url:'https://2a662dc734d44318af1f212537ccb95d.vfs.cloud9.eu-west-1.amazonaws.com/cancel'
       },
       transactions:[{
         amount:{
-          total:'10.00',
-          currency:'EUR'
+          total:'10',
+          currency:'USD'
         },
         description:'This is the payment transaction description.'
     }]
@@ -743,16 +779,16 @@ app.post('/pay', (req, res) => {
   });
 });
 
-app.get('/success', function(req, res) {
+app.get('/success', isLoggedIn, function(req, res) {
     const payerId = req.query.PayerID;           // request PayerId & paymentId params from paypal api
     const paymentId = req.query.paymentId;
     
     var execute_payment_json = {
-    payer_id: payerId,
-    transactions: [{
-        amount: {
-            currency: 'EUR',
-            total: '10.00'
+    "payer_id": payerId,
+    "transactions": [{
+        "amount": {
+            "currency": "USD",
+            "total": "10.00"
             }
         }]
     };
@@ -762,15 +798,15 @@ app.get('/success', function(req, res) {
         console.log(error.response);
         throw error;
     } else {
-        //console.log("Get Payment Response");
+        console.log("Get Payment Response");
         console.log(JSON.stringify(payment));
-         res.redirect('success', {execute_payment_json});
+         res.send('success');
         }
     });
 });
 
-app.get('/cancel', function(req, res){
-    res.redirect('/');
+app.get('/cancel', isLoggedIn, function(req, res){
+    res.send('cancelled');
 })
 
 

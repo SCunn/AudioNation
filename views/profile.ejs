@@ -13,17 +13,17 @@
       <hr>
       <h3>Test</h3>
        <div id="item-cont">
-        <% if (products.user_Id == user.Id) { %>
+        <% if (products.Id == user.Id) { %>
         <% products.forEach(function(item) { %>
          
-           <!--<div></div><a class="btn btn-primary" href="/item/<%= item.id %>" >View</a> </div>-->
+           <div></div><a class="btn btn-primary" href="/item/<%= item.id %>/<%= item.purpose %>" >View</a> </div>
            <div><a class="btn btn-primary" href="/delete/<%= item.id %>" >Delete</a> </div>
            <div><a class="btn btn-primary" href="/edititem/<%= item.id %>" >Edit</a> </div>
            <div style="padding-bottom: 1%"><a class="btn btn-primary" href="/addtocart/<%= item.id %>" >Add to Cart</a> </div>
         <figure class="snip1423">
           <img src="/<%= item.image %>" />
           <figcaption>
-            <h3><%= item.user_Id %></h3>
+            <h3><%= item.Id %></h3>
             <h3><%= item.album %></h3>
              <h4><%= item.genre %></h4>
             <p><%= item.info %></p>
@@ -60,7 +60,7 @@
 						<strong class="itemp">Id: </strong><%= user.Id %><br>
 						<strong class="itemp">username: </strong><%= user.username %><br>
 						<strong class="itemp">email: </strong><%= user.email %><br>
-						<strong class="itemp">password: </strong><%= user.password %>
+					
 					</p>
 
 

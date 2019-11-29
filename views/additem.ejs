@@ -61,15 +61,30 @@
                                 <div class="form-group row">
                                     <label for="purpose" class="col-md-4 col-form-label text-md-right">Sale Type</label>
                                     <div class="col-md-6">
-                                        <select  name="purpose">
-                                             <option>For Sale</option>
-                                             <option>Auction</option>
-                                             <option>Barter</option>
-                                            
-                                        </select>  
+                                            <input id="selectSale" type="radio" name="purpose" value="For Sale"> For Sale<br>
+                                            <input id="selectAuction" type="radio" name="purpose" value="Auction"> Auction<br>
+                                                <div id="showDatetime"><input name="duration" type="datetime-local" ></div>
+                                     
                                         
                                     </div>
                                 </div>
+                                
+                                <script>
+                                    $(document).ready(function(){
+                                        $("#selectAuction").click(function(){
+                                            $("#showDatetime").fadeIn(500);
+                                        });
+                                    });
+                                    
+                                    $(document).ready(function(){
+                                      $("#selectSale").click(function(){
+                                          $("#showDatetime").fadeToggle(500); 
+                                      }); 
+                                    });
+                                    
+                                    
+                                </script>
+                                
                                 
                                 <div class="form-group row">
                                     <label for="price" class="col-md-4 col-form-label text-md-right">Price</label>

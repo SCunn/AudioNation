@@ -1,61 +1,40 @@
 [
           {
-                    "user_Id": 3,
-                    "id": 1017,
-                    "artist": "Richie Hawtin",
-                    "album": "Closer to the Edit",
-                    "image": "audioNation_erd.jpg",
-                    "genre": "Techno",
+                    "Id": 1,
+                    "id": 1023,
+                    "artist": "Soundgarden",
+                    "album": "Badmoterfinger",
+                    "image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
+                    "genre": "Alt rock/ Alt metal/ Grunge / 90's",
                     "quality": "Used",
                     "info": "",
-                    "price": "10.50",
-                    "purpose": "For Sale"
+                    "price": "12",
+                    "purpose": "BuyNow"
           },
           {
-                    "artist": "Laurent Garnier",
-                    "album": "The Man with the red face",
-                    "image": "audioNation_erd.jpg",
-                    "genre": "Techno",
+                    "Id": 2,
+                    "id": 1024,
+                    "artist": "Leftfield",
+                    "album": "Leftism",
+                    "image": "worn-4429101_1920.png",
+                    "genre": "Electronic/ Techno/ Dub / 90's",
                     "quality": "Used",
                     "information": "",
-                    "price": "26",
-                    "purpose": "For Sale",
-                    "id": 1019
-          },
-          {
-                    "Id": null,
-                    "id": 1020,
-                    "artist": "",
-                    "album": "",
-                    "image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-                    "genre": "",
-                    "quality": "",
-                    "info": "",
-                    "price": "",
-                    "purpose": "For Sale"
-          },
-          {
-                    "Id": null,
-                    "id": 1021,
-                    "artist": "",
-                    "album": "",
-                    "image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-                    "genre": "",
-                    "quality": "",
-                    "info": "",
-                    "price": "",
-                    "purpose": "For Sale"
+                    "price": "35.00",
+                    "purpose": "Auction",
+                    "duration": "1575990000000"
           },
           {
                     "Id": 3,
-                    "id": 1022,
-                    "artist": "",
-                    "album": "",
-                    "image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
-                    "genre": "",
-                    "quality": "",
-                    "info": "",
-                    "price": "",
-                    "purpose": "For Sale"
+                    "id": 1025,
+                    "artist": "Metalica",
+                    "album": "Master of Puppets",
+                    "image": "mop.jpg",
+                    "genre": "Thrash metal",
+                    "quality": "Used",
+                    "information": "",
+                    "price": "36",
+                    "purpose": "Auction",
+                    "duration": "1575990000000"
           }
 ]
