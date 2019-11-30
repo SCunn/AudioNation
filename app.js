@@ -382,7 +382,42 @@ app.post('/edititem/:id', isLoggedIn, function(req, res) {
    
 });
 
+
+
+
+
+// // Url to see individual Auction Item
+app.get('/item/:id/Auction', function(req,res){
+    
+    function auctionWin(){
+        
+    }
+    
+    
+    // build the information based on changes made by the user
+   function chooseItem(mainOne){
+     return mainOne.id === parseInt(req.params.id)
+   }
+   
+   var mainOne = products.filter(chooseItem);
+   
+   res.render("item_auction", {res:mainOne});
+   
+});
+
+
+
 app.post('/bid/:id', function(req, res) {
+     let sql = 'SELECT * FROM users WHERE Id =  "'+req.user.Id+'" ';
+  
+  let query = db.query(sql, (err,res) => {
+        
+        if(err) throw err;
+        
+        console.log(res);  
+       
+    });
+    
          // stringify the JSON data so it can be called as a variable and modified when needed
       var json = JSON.stringify(products);
       
@@ -405,14 +440,15 @@ app.post('/bid/:id', function(req, res) {
       var h = req.body.price;
       var i = req.body.purpose;
       var j = req.body.duration;
+      var k = parseInt(req.user.Id);
     
    // The next section pushes new data to the json
     
-      products.splice(index, 1, {Id: x, id: a, artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, duration: j });
+      products.splice(index, 1, {Id: x, id: a, artist: b, album: c, image: d, genre: e, quality: f, information: g, price: h, purpose: i, duration: j, bidding_user_id: k });
       
    // this reformats the JSON and pushes it back to the file 
-      json = JSON.stringify(products, null, 11); // Structures the JSON to be more legible
-      fs.writeFile('./data/products.json',json, 'utf8', function(){});
+      json = JSON.stringify(products, null, 12); // Structures the JSON to be more legible
+      fs.writeFile('./data/products.json',json, 'utf8', function(err){ console.log(err)});
       
       req.flash('Bid', 'New Bid Placed on Your Item ! ' ); 
       
@@ -422,19 +458,24 @@ app.post('/bid/:id', function(req, res) {
 })
 
 
-// // Url to see individual product
-app.get('/item/:id/Auction', function(req,res){
+
+
+
+//  Winning bidder
+app.get('/item/:id/:bidding_user_id/:params', function(req,res){
     
     // build the information based on changes made by the user
    function chooseItem(mainOne){
-     return mainOne.id === parseInt(req.params.id)
+     return mainOne.bidding_user_id === parseInt(req.params.bidding_user_id)
    }
    
    var mainOne = products.filter(chooseItem);
    
-   res.render("item_auction", {res:mainOne});
+   res.render("auction_win", {res:mainOne});
    
 });
+
+
 
 // // Url to see individual product
 app.get('/item/:id/BuyNow', function(req,res){

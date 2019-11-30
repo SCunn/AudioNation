@@ -3,6 +3,8 @@
 <% include ../partials/header %>
 
 
+            <h1>Congratulations, You Have Won The Auction!!!!</h1>
+                <h2>Please Continue to Checkout!</h2>
  <% res.forEach(function(item) { %>
          
                     
@@ -31,11 +33,9 @@
                     <li><%= item.purpose %></li>
                     <li>&euro; <%= parseFloat(item.price).toFixed(2) %></li>
                   </ul>
-                        
-                        
-                    <div style="padding-bottom: 1%"><a class="btn btn-primary" href="/addtocart/<%= item.id %>" >Add to Cart</a> </div>
-                    
-                       
+                    <form action="/pay" method="post">
+                      <input type="submit" value="Pay with Paypal" class="btn btn-dark rounded-pill py-3 btn-block">
+                    </form>
                 </div>
             
               </div>

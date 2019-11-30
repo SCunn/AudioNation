@@ -20,9 +20,10 @@
                     "genre": "Electronic/ Techno/ Dub / 90's",
                     "quality": "Used",
                     "information": "",
-                    "price": "35.00",
+                    "price": "37",
                     "purpose": "Auction",
-                    "duration": "1575990000000"
+                    "duration": "1575990000000",
+                    "bidding_user_id": 1
           },
           {
                     "Id": 3,
@@ -36,5 +37,55 @@
                     "price": "36",
                     "purpose": "Auction",
                     "duration": "1575990000000"
+          },
+          {
+                    "Id": 3,
+                    "id": 1026,
+                    "artist": "Megadeth",
+                    "album": "Peace Sells",
+                    "image": "worn-4429101_1920.png",
+                    "genre": "Thrash metal",
+                    "quality": "Used",
+                    "info": "",
+                    "price": "12",
+                    "purpose": "Auction",
+                    "duration": "1575990000000"
+          },
+          {
+                    "Id": 2,
+                    "id": 1027,
+                    "artist": "Soundgarden",
+                    "album": "Superunknown",
+                    "image": "worn-4429101_1920.png",
+                    "genre": "Alt rock/ Alt metal/ Grunge / 90's",
+                    "quality": "Used",
+                    "information": "",
+                    "price": "15",
+                    "purpose": "BuyNow"
+          
+          },
+          {
+                    "Id": 3,
+                    "id": 1050,
+                    "artist": "Metalica",
+                    "album": "Master of Puppets",
+                    "image": "mop.jpg",
+                    "genre": "Thrash metal",
+                    "quality": "Used",
+                    "information": "",
+                    "price": "40",
+                    "purpose": "BuyNow"
+          },
+          {
+                   "Id": 3,
+                    "id": 1052,
+                    "artist": "Metalica",
+                    "album": "Kill'em All",
+                    "image": "worn-4429101_1920.png",
+                    "genre": "Thrash metal",
+                    "quality": "Used",
+                    "information": "",
+                    "price": "40",
+                    "purpose": "BuyNow"
           }
 ]

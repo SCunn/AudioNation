@@ -19,7 +19,7 @@
                           
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-            
+           
 
 
         </head>
@@ -60,7 +60,7 @@
               </nav>
                               
                 <div id="navMenuDrop">
-                		<ul>
+                		<ul style="list-style-type:none" >
                 			<li><a href="/items" class="w3-button w3-block w3-dark-grey">Items</a></li>
                 			<li><a href="/social" class="w3-button w3-block w3-dark-grey">Social</a></li>
                 			<li><a href="/register" class="w3-button w3-block w3-dark-grey">Register</a></li>
@@ -69,5 +69,21 @@
                 			<li><a href="/logout" class="w3-button w3-block w3-dark-grey">Sign Out</a></li>
                 		</ul>
                 </div>
-                              
-               
+                            
+                            
+                <script>              
+                         //  ------------ navbar menu mobile -----------
+                $(document).ready(function(){
+                	$("#flip").click(function(){
+                		$("#navMenuDrop").slideToggle(500);
+                	});
+                });
+                
+                $(document).ready(function(){
+                	$(document).scroll(function(){
+                		$("#navMenuDrop").fadeOut(1500);
+                		
+                	});
+                });
+                
+                </script>
