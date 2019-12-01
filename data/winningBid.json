@@ -1,0 +1,61 @@
+[
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://undefined:undefined/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    },
+    {
+        "Id": 3,
+        "id": 1026,
+        "message": "You have successfully Bid on Item 1026. You can checkout your winning bid at http://127.0.0.1:8080/item/1026/undefined/:params"
+    },
+    {
+        "Id": 2,
+        "id": 1024,
+        "bidding_user_id": 1,
+        "message": "You have successfully Bid on Item 1024. You can checkout your winning bid at http://127.0.0.1:8080/item/1024/1/:params"
+    }
+]

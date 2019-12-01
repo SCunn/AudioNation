@@ -34,7 +34,8 @@ header.masthead .overlay {
   width: 100%;
   top: 0;
   left: 0;
-  opacity: 0.3;
+  /*opacity: 0.8;*/
+  /*filter:grayscale(100%);*/
 }
 
 header.masthead h1 {
@@ -253,6 +254,8 @@ body {
     border: 3px solid #b3e0ff;
     padding: 10px;
     text-align: center;
+    background-color: black;
+    opacity: 0.8;
 }
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -265,9 +268,17 @@ body {
     padding: 8px;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:nth-child(even){
+  /*background-color: #f2f2f2;*/
+  
+}
 
-#customers tr:hover {background-color: #ddd;}
+/*#customers tr:hover {background-color: #ddd;}*/
+
+#customers tr {
+  color: #ddd;
+  
+}
 
 #customers th {
     padding-top: 12px;

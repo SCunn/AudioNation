@@ -20,7 +20,7 @@
                     "genre": "Electronic/ Techno/ Dub / 90's",
                     "quality": "Used",
                     "information": "",
-                    "price": "37",
+                    "price": "38.00",
                     "purpose": "Auction",
                     "duration": "1575990000000",
                     "bidding_user_id": 1
@@ -62,7 +62,6 @@
                     "information": "",
                     "price": "15",
                     "purpose": "BuyNow"
-          
           },
           {
                     "Id": 3,
@@ -77,7 +76,7 @@
                     "purpose": "BuyNow"
           },
           {
-                   "Id": 3,
+                    "Id": 3,
                     "id": 1052,
                     "artist": "Metalica",
                     "album": "Kill'em All",
