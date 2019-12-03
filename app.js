@@ -11,11 +11,14 @@ var flash = require('connect-flash');
 var bcrypt = require('bcrypt-nodejs');
 var math = require('mathjs');
 
-const { TaskTimer } = require('tasktimer');
+//const { TaskTimer } = require('tasktimer');
 
 const paypal = require('paypal-rest-sdk');
 
 const util = require('util');
+
+const PORT = process.env.PORT || 3000;          // environment variables used in messsage and app listen + paypal sandbox
+const IP = process.env.IP || "127.0.0.1";
 
 
 paypal.configure({
@@ -177,14 +180,11 @@ db.connect((err) => {
 
 // +++++++ JSON ++++++++++
 
-var social = require("./data/social.json"); // allow the app to access the social.json file
-var products = require("./data/products.json");
-var winningBid = require("./data/winningBid.json");
 
-app.get('/social', isLoggedIn, function (req, res) {
-    res.render("social", { social });
-    console.log("social page loaded, social page json data included");
-});
+var products = require("./data/products.json");
+
+
+
 // set up middleware function invoking the request and response function
 app.get('/', function (req, res) {
     res.render("index"); // renders the index page in the web browser
@@ -198,9 +198,9 @@ app.get('/', function (req, res) {
 //===========CRUD products JSON===============================================
 
 app.get('/items', function (req, res) {
-
+    datenow = Date.now();
     var productId = products && products[0].id;
-    res.render("items", { products });
+    res.render("items", { products, datenow });
 
 });
 
@@ -389,8 +389,9 @@ app.post('/edititem/:id', isLoggedIn, function (req, res) {
 
 
 // // Url to see individual Auction Item
-app.get('/item/:id/Auction', function (req, res) {
+app.get('/item/:id/Auction', isLoggedIn, function (req, res) {
 
+   
     // build the information based on changes made by the user
     function chooseItem(mainOne) {
         return mainOne.id === parseInt(req.params.id)
@@ -403,45 +404,18 @@ app.get('/item/:id/Auction', function (req, res) {
         Cantbid = "Seller can't bid on own Item"
     }
 
-    let datenow = Date.now()
-    let auctiondate = mainOne[0].duration
-    let timeLeft = parseInt(auctiondate) - datenow
-    let timeLeftHours = math.round(timeLeft / 1000 / 60 / 60)
-    let timeLeftMin = math.round(timeLeft / 1000 / 60) - (timeLeftHours * 60)
-    let timeLeftSec = math.round(timeLeftMin / 1000) - (timeLeftHours * 60) - timeLeftMin
-    if (timeLeft <= 0) {
+    let datenow = Date.now();
+    let auctiondate = mainOne[0].duration;
+    let timeLeft = parseInt(auctiondate) - datenow;
+    // let timeLeftHours = math.round(timeLeft / 1000 / 60 / 60);
+    // let timeLeftMin = (math.round(timeLeft / 1000 / 60) - (timeLeftHours * 60));
+    //let timeLeftSec =  ((timeLeftHours * 60 * 60) + (timeLeftMin * 60)) - (timeLeft / 1000);
+    if (timeLeft >= 0) {
         let finished = null
-        res.render("item_auction", { res: mainOne, timeLeftMin, timeLeftHours, timeLeftSec, finished, Cantbid });
+        res.render("item_auction", { res: mainOne, finished, Cantbid });
     }
     else {
         let finished = "Auction Has finished"
-
-
-
-        // create a message obj
-        var item_New = {
-            Id: mainOne[0].Id,
-            id: mainOne[0].id,
-            bidding_user_id: mainOne[0].bidding_user_id,
-            message: "You have successfully Bid on Item " + mainOne[0].id + ". You can checkout your winning bid at http://" + process.env.IP + ":" + process.env.PORT + "/item/" + mainOne[0].id + "/" + mainOne[0].bidding_user_id + "/:params"
-        }
-        // write object to file
-        fs.readFile('./data/winningBid.json', 'utf8', function readfileCallback(err) {
-            //for (var i = 0; i <= winningBid.length; i++) {
-                // var obj = winningBid[i];
-                // if (obj.id !== mainOne[0].id) {
-                    //console.log(obj.id);
-                    if (err) {
-                        throw (err)
-                    } else {
-                        winningBid.push(item_New); // add the new data to the JSON file
-                        json = JSON.stringify(winningBid, null, 4); // this line structures the JSON so it is easy on the eye
-                        fs.writeFile('./data/winningBid.json', json, 'utf8', function (err) { console.log(err) });
-                    }
-                // }
-            //}
-        });
-
         res.render("item_auction", { res: mainOne, finished, Cantbid })
     }
 
@@ -506,6 +480,15 @@ app.post('/bid/:id', function (req, res) {
 //  Winning bidder
 app.get('/item/:id/:bidding_user_id/:params', function (req, res) {
 
+    let sql = 'SELECT * FROM users WHERE Id =  "' + req.user.Id + '" ';
+
+    let query = db.query(sql, (err, res) => {
+
+        if (err) throw err;
+
+        console.log(res);
+
+    });
     // build the information based on changes made by the user
     function chooseItem(mainOne) {
         return mainOne.bidding_user_id === parseInt(req.params.bidding_user_id)
@@ -558,7 +541,7 @@ app.get('/delete/:id', isLoggedIn, function (req, res) {
     json = JSON.stringify(products, null, 9); // this line structures the JSON so it is easy on the eye
     fs.writeFile('./data/products.json', json, 'utf8', function () { });
 
-    res.redirect("/items");
+    res.redirect("/profile");
 
 })
 
@@ -586,12 +569,15 @@ app.get('/profile', isLoggedIn, function (req, res) {
     user_Id == product_user_Id;
 
 
-
+    datenow = Date.now()
 
     res.render("profile", {
         messages: req.flash('Bid'),
         user: req.user, // get the user out of session and pass to template
-        products: product_user_Id
+        products,
+        datenow,
+        IP,
+        PORT
     });
 
 });
@@ -835,8 +821,10 @@ app.post('/pay', isLoggedIn, (req, res) => {
             payment_method: 'paypal'
         },
         redirect_urls: {
-            return_url: 'https://2a662dc734d44318af1f212537ccb95d.vfs.cloud9.eu-west-1.amazonaws.com/success',
-            cancel_url: 'https://2a662dc734d44318af1f212537ccb95d.vfs.cloud9.eu-west-1.amazonaws.com/cancel'
+            //return_url: 'https://2a662dc734d44318af1f212537ccb95d.vfs.cloud9.eu-west-1.amazonaws.com/success',
+            return_url: 'http://'+IP+':'+PORT+'/success',
+            cancel_url: 'http://'+IP+':'+PORT+'/cancel'
+            //cancel_url: 'https://2a662dc734d44318af1f212537ccb95d.vfs.cloud9.eu-west-1.amazonaws.com/cancel'
         },
         transactions: [{
             amount: {
@@ -865,6 +853,7 @@ app.post('/pay', isLoggedIn, (req, res) => {
 app.get('/success', function (req, res) {
     const payerId = req.query.PayerID;           // request PayerId & paymentId params from paypal api
     const paymentId = req.query.paymentId;
+    
 
     var execute_payment_json = {
         "payer_id": payerId//,
@@ -882,24 +871,22 @@ app.get('/success', function (req, res) {
             //throw error;
         } else {
             console.log("Get Payment Response");
-            console.log("Get Payment Response");
             console.log(JSON.stringify(payment));
+            
+
             res.render('success');
         }
     });
 });
 
-// app.get('/cancel', isLoggedIn, function (req, res) {
-//     res.send('cancelled');
-// })
-
-
-app.get('/confirmation', function(req, res) {
-    res.render('confirmation');
+app.get('/cancel', function (req, res) {
+    res.render('cancelled');
 })
+
+
 
 
 // This code provides the server port for the application to run on
 app.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function () {
-    console.log("App Running!!");
+    console.log("App Running on http://"+IP+":"+PORT);
 });

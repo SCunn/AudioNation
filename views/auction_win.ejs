@@ -6,7 +6,7 @@
             <h1>Congratulations, You Have Won The Auction!!!!</h1>
                 <h2>Please Continue to Checkout!</h2>
  <% res.forEach(function(item) { %>
-         
+         <% if (item.bidding_user_id == user.Id) { %>
                     
             <!-- Page Content -->
             <div class="container">
@@ -33,7 +33,16 @@
                     <li><%= item.purpose %></li>
                     <li>&euro; <%= parseFloat(item.price).toFixed(2) %></li>
                   </ul>
+
+               <% } %>
                     <form action="/pay" method="post">
+                     
+                     
+                      <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong><strong>&euro;<%= parseFloat(item.price) + 1.25 + 3.00 %></strong></li>
+                      <input name="total" type="hidden" class="form-control" value="<%%>" >
+                        <h5 class="font-weight-bold"></h5>
+                      </li>
+                    </ul>
                       <input type="submit" value="Pay with Paypal" class="btn btn-dark rounded-pill py-3 btn-block">
                     </form>
                 </div>

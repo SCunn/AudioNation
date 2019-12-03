@@ -1,27 +1,42 @@
 <% include ../partials/header %>
-<!--<div class="overlay" ><img src="/vinyl-2573856_1920.jpg" alt="newsImg" style="width:100%;"></div>-->
+
+ <header class="masthead text-white text-justified">
+  <div class="overlay" ><img src="/vinyl-1849717_1920.jpg" alt="newsImg" style="width:100%;"></div>
+  <div class="container"> 
 
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-2 sidenav"> <img src="/vinyl-2573856_1920.jpg" alt="newsImg" style="width:100%;">   
-      <p><a href="/additem">Create New Item</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
+    <div class="col-sm-2 sidenav"> <img src="/vinyl-1233111_1920.jpg" alt="newsImg" style="width:100%;">   
+      <p><a class="btn btn-primary" style="margin-top:3%;" href="/additem">Create New Item</a></p>
+     
     </div>
-    <div class="col-sm-8 text-left"> 
-      <div class="overlay" ><img src="/vinyl-1849717_1920.jpg" alt="newsImg" style="width:100%;"></div>
+    <div class="col-sm-10 text-left"> 
+        <h1><span class="fa fa-user"></span> Profile Page</h1>
       <hr>
-      <h3>Test</h3>
-       <div id="item-cont">    
-        <% if (products.Id == user.Id) { %>
-        <% products.forEach(function(item) { %>
-         
-           <div></div><a class="btn btn-primary" href="/item/<%= item.id %>/<%= item.purpose %>" >View</a> </div>
-           <div><a class="btn btn-primary" href="/delete/<%= item.id %>" >Delete</a> </div>
-           <div><a class="btn btn-primary" href="/edititem/<%= item.id %>" >Edit</a> </div>
-           <div style="padding-bottom: 1%"><a class="btn btn-primary" href="/addtocart/<%= item.id %>" >Add to Cart</a> </div>
-        <figure class="snip1423">
-          <img src="/<%= item.image %>" />
+      <div class="row">
+
+          <!-- LOCAL INFORMATION -->
+          <div class="item">
+                <h3>
+                  <strong class="itemp">Id: </strong><%= user.Id %><br>
+                  <strong class="itemp">username: </strong><%= user.username %><br>
+                  <strong class="itemp">email: </strong><%= user.email %><br>
+                
+                </h3>
+          </div>
+      
+        </div>
+
+        <hr>
+
+      <h2>Your Items</h2>
+      
+      <% products.forEach(function(item) { %>
+        <% if (item.Id == user.Id) { %>           
+      <div id="item-cont"> 
+        <div class="figHolder">   
+        <div class="snip1423" style ="height: 601px;">
+          <img src="/<%= item.image %>" style="width:100%" />
           <figcaption>
             <h3><%= item.Id %></h3>
             <h3><%= item.album %></h3>
@@ -31,58 +46,75 @@
               &euro; <%= parseFloat(item.price).toFixed(2) %>
             </div>
             <p><%= item.purpose %></p>
-          </figcaption><i class="ion-android-cart"></i>
-        </figure>
-        
-       <% }); %>
+
+            <% if (item.purpose == "Auction") { %> 
+            <% var int_time = parseInt(item.duration); %>
+                    <% var d = new Date(int_time); %>
+                    
+                    <% var endTime = d.toUTCString(); %>
+                   
+                    
+                    <p>Auction Ends: <%= endTime; %></p>
+
+                    <% } %> 
+
+          </figcaption>
+          
+        </div>
+
+        <div id="editDelete">
+        <a href="/edititem/<%= item.id %>" class="btn btn-primary">Edit</a>
+        <p class="btn btn-primary" id="doit<%= item.id %>">Delete</a>
+        <p id="yes<%= item.id %>" style="display:none">
+        Are you sure?
+                              <a href="/delete/<%= item.id %>" class="btn btn-primary">Yes</a>
+                   </p>
+                   
+                   <script>
+                     $(document).ready(function(){
+                       $("#doit<%= item.id %>").click(function(){
+                         $("#yes<%= item.id %>").fadeToggle(2000); 
+                         
+                       })
+                       
+                     })
+                     
+                   </script>
+        </div>
+
+      </div>
+        <% } %>
+
+        <% }); %>
+
+    
        
-       <% } else { %>
-       
-       <h2>No Items to trade, Please Create new Items</h2>
-       
-       <% } %>
+   
       <div class="row">
 <div class="container">
 
-	<div class="item">
-		<h1><span class="fa fa-anchor"></span> Profile Page</h1>
-		
-	</div>
-
-	<div class="row">
-
-		<!-- LOCAL INFORMATION -->
-		<div class="item">
-
-			
-
-					<p>
-						<strong class="itemp">Id: </strong><%= user.Id %><br>
-						<strong class="itemp">username: </strong><%= user.username %><br>
-						<strong class="itemp">email: </strong><%= user.email %><br>
-					
-					</p>
+	
+  <div>
+      <% products.forEach(function(item) { %>
+        <% if (item.bidding_user_id == user.Id) { %> 
+          <%  if (item.duration < datenow) { %>
+             <p>
+               You Have Won Item <%= item.id %> In The Auction. You Can Purchase Your Item at http://<%= IP %>:<%= PORT %>/item/<%= item.id %>/<%= item.bidding_user_id %>/:params
+             </p>
+           <% } %>
+        <% } %>
+      <% }); %>  
+  </div>
 
 
-		
-		</div>
-
-	</div>
 
 </div>
-  </div>
-      
-      <p>Lorem ipsum...</p>
-    </div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
+        
+          
+        </div>
       </div>
     </div>
   </div>
-</div>
+</header>
 
 <% include ../partials/footer %>

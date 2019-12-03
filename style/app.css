@@ -25,6 +25,7 @@ header.masthead {
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
+  
 }
 
 header.masthead .overlay {
@@ -37,6 +38,7 @@ header.masthead .overlay {
   /*opacity: 0.8;*/
   /*filter:grayscale(100%);*/
 }
+
 
 header.masthead h1 {
   font-size: 2rem;
@@ -245,6 +247,16 @@ footer.footer {
 body {
   background-color: #212121;
 }
+#editDelete {
+  position: relative;
+  float: left;
+  
+}
+
+.figHolder {
+  float:left;
+}
+
 
 /* table   */
 .mainCont { 
@@ -291,3 +303,7 @@ body {
 div #showDatetime{
   display: none;
 }
+
+
+
+

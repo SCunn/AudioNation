@@ -39,12 +39,6 @@
                    
                     
                     <p>Auction Ends: <%= endTime; %></p>
-                    <%if (!finished) {%>
-                        <p>Time left is <%= timeLeftHours %> Hrs <%= timeLeftMin %> minutes and <%= timeLeftSec %> Seconds left</p>
-                        <%}%>
-                    <%if (finished) {%>
-                        <p>Auction has finished <a href="/item/<%= item.id %>/<%= item.bidding_user_id %>/:params"> Winning Bidder click here</a></p>
-                    <%}%>
 
                   </ul>
                 </div>
@@ -119,7 +113,7 @@
         </div>
     </div>
     
-    <% if (Cantbid) {%>
+    <% if (!Cantbid) {%>
     <div class="form-group row">
         <label for="price" class="col-md-4 col-form-label text-md-right">Place Bid</label>
         <div class="col-md-6">

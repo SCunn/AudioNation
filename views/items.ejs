@@ -1,5 +1,9 @@
 <% include ../partials/header %>
-
+<header class="masthead text-white text-justified">
+    <div class="overlay" >
+      <img src="/vinyl-2573856_1920.jpg" alt="newsImg" style="width:100%;">
+    </div>
+    <div class="container">
 <div class="containerr">    
   <div class="row content">
     <div class="col-sm-2 sidenav">
@@ -7,25 +11,20 @@
       <!--<p><a href="#">Link</a></p>-->
       <!--<p><a href="#">Link</a></p>-->
     </div>
-    <div class="col-sm-8 text-left"> 
-      <h1>Welcome</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint 
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est 
-      laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore 
-      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-      aliquip ex ea commodo consequat.</p>
-      <hr>
-      <h3>Items</h3>
+    <div class="col-sm-12 text-center" > 
+      <div style ="background-color: black; opacity: 0.7;">
+      <h1>Items Page</h1>
       
-        
+      <hr>
+      <h2 >Select Item to Buy Now or Place Bid! </h2>
+      
+      </div> 
         <% products.forEach(function(item) { %>
          
-      <div id="item-cont">
-           
-        <figure class="snip1423" >
-          <img src="/<%= item.image %>" style="width:50%;"  />
+      <div id="item-cont" style ="margin: 4% ;" >
+        <% if (item.duration > datenow || item.purpose == "BuyNow") {%>
+        <figure class="snip1423" style ="height: 601px ;" >
+          <img src="/<%= item.image %>" style="width:100%"  />
           <figcaption>
             <h3><%= item.artist %></h3>
             <h3><%= item.album %></h3>
@@ -35,7 +34,9 @@
               &euro; <%= parseFloat(item.price).toFixed(2) %>
             </div>
             <p><%= item.purpose %></p>
-            
+
+            <% if (item.purpose == "Auction") {%>
+
             <% var int_time = parseInt(item.duration); %>
                     <% var d = new Date(int_time); %>
                     
@@ -43,9 +44,11 @@
                    
                     
                     <p>Auction Ends: <%= endTime; %></p>
+            <% } %>       
          </figcaption>    <i class="fas fa-eye"></i>
+
            <a style="height: 560px;" href="/item/<%= item.id %>/<%= item.purpose %>" >View</a> 
-           
+         <% } %> 
         </figure>
         
 
@@ -58,10 +61,11 @@
 
       
     </div>
-
+      </div>
+    </div>
   </div>
 </div>
-
+</header>
 
 
 <% include ../partials/footer %>
