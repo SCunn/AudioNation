@@ -2,12 +2,12 @@
 
 <% include ../partials/header %>
 
-
-            <h1>Congratulations, You Have Won The Auction!!!!</h1>
-                <h2>Please Continue to Checkout!</h2>
- <% res.forEach(function(item) { %>
-         <% if (item.bidding_user_id == user.Id) { %>
-          <%  if (item.duration < datenow) { %>      
+        
+<% res.forEach(function(item) { %>
+  <% if (item.bidding_user_id == user.Id) { %>
+    <%  if (item.duration < datenow) { %>      
+      <h1>Congratulations, You Have Won The Auction!!!!</h1>
+          <h2>Please Continue to Checkout!</h2>
             <!-- Page Content -->
             <div class="container">
             

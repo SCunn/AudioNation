@@ -424,7 +424,7 @@ app.get('/item/:id/Auction', isLoggedIn, function (req, res) {
 
 
 
-app.post('/bid/:id', function (req, res) {
+app.post('/bid/:id', isLoggedIn, function  (req, res) {
     let sql = 'SELECT * FROM users WHERE Id =  "' + req.user.Id + '" ';
 
     let query = db.query(sql, (err, res) => {
@@ -480,7 +480,7 @@ app.post('/bid/:id', function (req, res) {
 
 
 //  Winning bidder
-app.get('/item/:id/:bidding_user_id/:params', function (req, res) {
+app.get('/item/:id/:bidding_user_id/:params',  isLoggedIn, function (req, res) {
 
     let sql = 'SELECT * FROM users WHERE Id =  "' + req.user.Id + '" ';
 
@@ -505,7 +505,7 @@ app.get('/item/:id/:bidding_user_id/:params', function (req, res) {
 
 
 // // buy now
-app.get('/item/:id/BuyNow', function (req, res) {
+app.get('/item/:id/BuyNow', isLoggedIn, function (req, res) {
 
     let sql = 'SELECT * FROM users WHERE Id =  "' + req.user.Id + '" ';
 
@@ -852,7 +852,7 @@ app.post('/pay', isLoggedIn, (req, res) => {
     });
 });
 
-app.get('/success', function (req, res) {
+app.get('/success', isLoggedIn, function (req, res) {
    
     
     const payerId = req.query.PayerID;           // request PayerId & paymentId params from paypal api
@@ -875,7 +875,7 @@ app.get('/success', function (req, res) {
             //throw error;
         } else {
             console.log("Get Payment Response");
-            console.log(JSON.stringify(payment));
+            //console.log(JSON.stringify(payment));
             
             res.render('success', {payment});
         }
