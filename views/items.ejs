@@ -19,10 +19,12 @@
       <h2 >Select Item to Buy Now or Place Bid! </h2>
       
       </div> 
+
         <% products.forEach(function(item) { %>
+          <div id="item-cont" style ="margin: 4% ;" >
          
-      <div id="item-cont" style ="margin: 4% ;" >
         <% if (item.duration > datenow || item.purpose == "BuyNow") {%>
+
         <figure class="snip1423" style ="height: 601px ;" >
           <img src="/<%= item.image %>" style="width:100%"  />
           <figcaption>
@@ -48,7 +50,8 @@
          </figcaption>    <i class="fas fa-eye"></i>
 
            <a style="height: 560px;" href="/item/<%= item.id %>/<%= item.purpose %>" >View</a> 
-         <% } %> 
+           
+         <% } %>
         </figure>
         
 

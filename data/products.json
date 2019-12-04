@@ -4,10 +4,10 @@
                     "id": 1023,
                     "artist": "Soundgarden",
                     "album": "Badmoterfinger",
-                    "image": "Badmotorfinger-album-cover-web-optimised-820.jpg",
+                    "image": "worn-4429101_1920.png",
                     "genre": "Alt rock/ Alt metal/ Grunge / 90's",
                     "quality": "Used",
-                    "info": "",
+                    "information": "Badmotorfinger is the third studio album by American rock band Soundgarden, released on September 24, 1991, through A&M Records. Soundgarden began the recording sessions for the album with new bassist Ben Shepherd in the spring of 1991.",
                     "price": "12",
                     "purpose": "BuyNow"
           },
@@ -19,10 +19,10 @@
                     "image": "worn-4429101_1920.png",
                     "genre": "Electronic/ Techno/ Dub / 90's",
                     "quality": "Used",
-                    "information": "",
+                    "information": "Leftism is the debut studio album by English electronic music duo Leftfield, released in 1995 on Columbia Records. It contained a mixture of new tracks along with reworked versions of previous Leftfield singles.",
                     "price": "38.00",
                     "purpose": "Auction",
-                    "duration": "1575990000000",
+                    "duration": "1575384300000",
                     "bidding_user_id": 1
           },
           {
@@ -30,13 +30,14 @@
                     "id": 1025,
                     "artist": "Metalica",
                     "album": "Master of Puppets",
-                    "image": "mop.jpg",
+                    "image": "vinyl-2573856_1920.jpg",
                     "genre": "Thrash metal",
                     "quality": "Used",
-                    "information": "",
+                    "information": "Master of Puppets is the third studio album by American heavy metal band Metallica. It was released on March 3, 1986 by Elektra Records. Recorded at the Sweet Silence Studios with producer Flemming Rasmussen.",
                     "price": "36",
                     "purpose": "Auction",
-                    "duration": "1575990000000"
+                    "duration": "1575384300000",
+                    "bidding_user_id": 2
           },
           {
                     "Id": 3,
@@ -46,10 +47,11 @@
                     "image": "worn-4429101_1920.png",
                     "genre": "Thrash metal",
                     "quality": "Used",
-                    "info": "",
-                    "price": "12",
+                    "information": "Peace Sells... but Who's Buying? is the second studio album by American thrash metal band Megadeth, released on September 19, 1986 by Capitol Records. The project was originally handled by Combat Records",
+                    "price": "37.00",
                     "purpose": "Auction",
-                    "duration": "1575990000000"
+                    "duration": "1575990000000",
+                    "bidding_user_id": 2
           },
           {
                     "Id": 2,
@@ -59,7 +61,7 @@
                     "image": "worn-4429101_1920.png",
                     "genre": "Alt rock/ Alt metal/ Grunge / 90's",
                     "quality": "Used",
-                    "information": "",
+                    "information": "Superunknown is the fourth studio album by American rock band Soundgarden, released on March 8, 1994, through A&M Records. It is the band's second album with bassist Ben Shepherd, and features new producer Michael Beinhorn.",
                     "price": "15",
                     "purpose": "BuyNow"
           },
@@ -68,10 +70,10 @@
                     "id": 1050,
                     "artist": "Metalica",
                     "album": "Master of Puppets",
-                    "image": "mop.jpg",
+                    "image": "worn-4429101_1920.png",
                     "genre": "Thrash metal",
                     "quality": "Used",
-                    "information": "",
+                    "information": "Master of Puppets is the third studio album by American heavy metal band Metallica. It was released on March 3, 1986 by Elektra Records. Recorded at the Sweet Silence Studios with producer Flemming Rasmussen.",
                     "price": "40",
                     "purpose": "BuyNow"
           },
@@ -83,8 +85,121 @@
                     "image": "worn-4429101_1920.png",
                     "genre": "Thrash metal",
                     "quality": "Used",
-                    "information": "",
+                    "information": "Kill 'Em All is the debut studio album by the American heavy metal band Metallica, released on July 25, 1983, by the independent record label Megaforce Records",
                     "price": "40",
                     "purpose": "BuyNow"
+          },
+          {
+                    "Id": 2,
+                    "id": 1053,
+                    "artist": "Carl Cox",
+                    "album": "The Best of",
+                    "image": "vinyl-1233111_1920.jpg",
+                    "genre": "Techno",
+                    "quality": "Used",
+                    "information": "Carl Cox (born 29 July 1962) is a British house and techno record producer and DJ. In the 1980s, Cox became a mainstage DJ in the electronica industry. He has performed at numerous clubs and events worldwide and has served as a monthly DJ for BBC Radio 1'",
+                    "price": "12",
+                    "purpose": "BuyNow"
+          },
+          {
+                    "Id": 3,
+                    "id": 1053,
+                    "artist": "Carl Cox",
+                    "album": "The Best of",
+                    "image": "vinyl-1233111_1920.jpg",
+                    "genre": "Techno",
+                    "quality": "Used",
+                    "information": "Carl Cox (born 29 July 1962) is a British house and techno record producer and DJ. In the 1980s, Cox became a mainstage DJ in the electronica industry. He has performed at numerous clubs and events worldwide and has served as a monthly DJ for BBC Radio 1'",
+                    "price": "12",
+                    "purpose": "BuyNow"
+          },
+          {
+                    "Id": 4,
+                    "id": 1054,
+                    "artist": "The Doors",
+                    "album": "The Doors",
+                    "image": "vinyl-2573856_1920.jpg",
+                    "genre": "Rock",
+                    "quality": "Used",
+                    "information": "The Doors were an American rock band formed in Los Angeles in 1965, with vocalist Jim Morrison, keyboardist Ray Manzarek, guitarist Robby Krieger, and drummer John Densmore.",
+                    "price": "30",
+                    "purpose": "Auction",
+                    "duration": 1575478800000
+          },
+          {
+                    "Id": 4,
+                    "id": 1055,
+                    "artist": "The Pixies",
+                    "album": "Doolittle",
+                    "image": "stringify payment on the success page.png",
+                    "genre": "Alt rock",
+                    "quality": "Used",
+                    "information": "Doolittle was the Pixies' first international release, with Elektra Records as the album's distributor in the United States and PolyGram in Canada. Pixies released two singles from Doolittle, \"Here Comes Your Man\" and \"Monkey Gone to Heaven\"",
+                    "price": "32",
+                    "purpose": "BuyNow",
+                    "duration": null
+          }
+          ,
+          {
+                    "Id": 3,
+                    "id": 1052,
+                    "artist": "Metalica",
+                    "album": "Kill'em All",
+                    "image": "worn-4429101_1920.png",
+                    "genre": "Thrash metal",
+                    "quality": "Used",
+                    "information": "Kill 'Em All is the debut studio album by the American heavy metal band Metallica, released on July 25, 1983, by the independent record label Megaforce Records",
+                    "price": "40",
+                    "purpose": "BuyNow"
+          },
+          {
+                    "Id": 2,
+                    "id": 1053,
+                    "artist": "Carl Cox",
+                    "album": "The Best of",
+                    "image": "vinyl-1233111_1920.jpg",
+                    "genre": "Techno",
+                    "quality": "Used",
+                    "information": "Carl Cox (born 29 July 1962) is a British house and techno record producer and DJ. In the 1980s, Cox became a mainstage DJ in the electronica industry. He has performed at numerous clubs and events worldwide and has served as a monthly DJ for BBC Radio 1'",
+                    "price": "12",
+                    "purpose": "BuyNow"
+          },
+          {
+                    "Id": 3,
+                    "id": 1053,
+                    "artist": "Carl Cox",
+                    "album": "The Best of",
+                    "image": "vinyl-1233111_1920.jpg",
+                    "genre": "Techno",
+                    "quality": "Used",
+                    "information": "Carl Cox (born 29 July 1962) is a British house and techno record producer and DJ. In the 1980s, Cox became a mainstage DJ in the electronica industry. He has performed at numerous clubs and events worldwide and has served as a monthly DJ for BBC Radio 1'",
+                    "price": "12",
+                    "purpose": "BuyNow"
+          },
+          {
+                    "Id": 4,
+                    "id": 1054,
+                    "artist": "The Doors",
+                    "album": "The Doors",
+                    "image": "vinyl-2573856_1920.jpg",
+                    "genre": "Rock",
+                    "quality": "Used",
+                    "information": "The Doors were an American rock band formed in Los Angeles in 1965, with vocalist Jim Morrison, keyboardist Ray Manzarek, guitarist Robby Krieger, and drummer John Densmore.",
+                    "price": "30",
+                    "purpose": "Auction",
+                    "duration": 1575478800000
+          },
+          {
+                    "Id": 4,
+                    "id": 1055,
+                    "artist": "The Pixies",
+                    "album": "Doolittle",
+                    "image": "stringify payment on the success page.png",
+                    "genre": "Alt rock",
+                    "quality": "Used",
+                    "information": "Doolittle was the Pixies' first international release, with Elektra Records as the album's distributor in the United States and PolyGram in Canada. Pixies released two singles from Doolittle, \"Here Comes Your Man\" and \"Monkey Gone to Heaven\"",
+                    "price": "32",
+                    "purpose": "BuyNow",
+                    "duration": null
           }
 ]

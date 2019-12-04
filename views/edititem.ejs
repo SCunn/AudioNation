@@ -12,7 +12,7 @@
                     <% res.forEach(function(mainOne) { %>
                     
                             
-                            <form accept-charset="UTF-8" style="" action="/edititem/<%= mainOne.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
+                            <form accept-charset="UTF-8"  action="/edititem/<%= mainOne.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
                                     
                                 <div class="form-group row">
                                     <label for="artist" class="col-md-4 col-form-label text-md-right">Artist Name</label>
@@ -61,7 +61,7 @@
                                 <div class="form-group row">
                                     <label for="purpose" class="col-md-4 col-form-label text-md-right">Sale Type</label>
                                     <div class="col-md-6">
-                                            <input id="selectSale" type="radio" name="purpose" value="For Sale"> For Sale<br>
+                                            <input id="selectSale" type="radio" name="purpose" value="BuyNow"> For Sale<br>
                                             <input id="selectAuction" type="radio" name="purpose" value="Auction"> Auction<br>
                                                 <div id="showDatetime"><input name="duration" type="datetime-local" ></div>
                                      

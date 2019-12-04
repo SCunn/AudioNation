@@ -28,12 +28,31 @@
         </div>
 
         <hr>
+        <div style="padding-right: 5%;" class="container">
+         
+	
+          <div>
+              <% products.forEach(function(item) { %>
+                <% if (item.bidding_user_id == user.Id) { %> 
+                  <%  if (item.duration < datenow) { %>
+                     <h1>
+                      Congratulations !!!</h1><img src="/<%= item.image %>" style="width:30%; float:left;" /> <h3 style="width:30%; float:left; ">You Have Won <%= item.album %> by <%= item.artist %> (id:<%= item.id %>) In The Auction. Please Purchase Your Item. <a class="btn btn-primary" style="margin-top: 5%;" href="http://<%= IP %>:<%= PORT %>/item/<%= item.id %>/<%= item.bidding_user_id %>/:params" >Go See Winning Item!</a> </h3>
+                      
+                   <% } %>
+                <% } %>
+              <% }); %>  
+          </div>
+
+         
+        
+        </div>
+ <hr>
 
       <h2>Your Items</h2>
       
       <% products.forEach(function(item) { %>
+        <div id="item-cont"> 
         <% if (item.Id == user.Id) { %>           
-      <div id="item-cont"> 
         <div class="figHolder">   
         <div class="snip1423" style ="height: 601px;">
           <img src="/<%= item.image %>" style="width:100%" />
@@ -41,7 +60,7 @@
             <h3><%= item.Id %></h3>
             <h3><%= item.album %></h3>
              <h4><%= item.genre %></h4>
-            <p><%= item.info %></p>
+            
             <div class="price">
               &euro; <%= parseFloat(item.price).toFixed(2) %>
             </div>
@@ -73,7 +92,7 @@
                    <script>
                      $(document).ready(function(){
                        $("#doit<%= item.id %>").click(function(){
-                         $("#yes<%= item.id %>").fadeToggle(2000); 
+                         $("#yes<%= item.id %>").fadeIn(2000); 
                          
                        })
                        
@@ -83,6 +102,9 @@
         </div>
 
       </div>
+
+      
+
         <% } %>
 
         <% }); %>
@@ -91,24 +113,7 @@
        
    
       <div class="row">
-<div class="container">
 
-	
-  <div>
-      <% products.forEach(function(item) { %>
-        <% if (item.bidding_user_id == user.Id) { %> 
-          <%  if (item.duration < datenow) { %>
-             <p>
-               You Have Won Item <%= item.id %> In The Auction. You Can Purchase Your Item at http://<%= IP %>:<%= PORT %>/item/<%= item.id %>/<%= item.bidding_user_id %>/:params
-             </p>
-           <% } %>
-        <% } %>
-      <% }); %>  
-  </div>
-
-
-
-</div>
         
           
         </div>

@@ -31,11 +31,15 @@
                   <a class="navbar-brand" href="/">AudioNation</a>
                   <a class="py-2 d-none d-md-inline-block" href="/items">Items</a>
                   
-                  <a class="py-2 d-none d-md-inline-block" href="/register">Register</a>
                   <a class="py-2 d-none d-md-inline-block" href="/profile">Your Account</a>
-                  <a class="py-2 d-none d-md-inline-block" href="/login">Sign In</a>
-                  <a class="py-2 d-none d-md-inline-block" href="/logout">Sign Out</a>
                   
+                  
+                    <a class="py-2 d-none d-md-inline-block" href="/logout">Sign Out</a>
+                    
+                    <a class="py-2 d-none d-md-inline-block" href="/register">Register</a>
+                    <a class="py-2 d-none d-md-inline-block" href="/login">Sign In</a>
+
+                    
                   <% if (typeof session.cart !== "undefined") { %>
                   <a class="glyphicon glyphicon-shopping-cart" href="/cart">Cart( 
                                 <%= session.cart.totalItems %>

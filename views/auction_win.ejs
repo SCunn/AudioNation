@@ -7,7 +7,7 @@
                 <h2>Please Continue to Checkout!</h2>
  <% res.forEach(function(item) { %>
          <% if (item.bidding_user_id == user.Id) { %>
-                    
+          <%  if (item.duration < datenow) { %>      
             <!-- Page Content -->
             <div class="container">
             
@@ -25,7 +25,7 @@
             
                 <div class="col-md-4">
                   <h3 class="my-3">Product Description</h3>
-                  <p><%= item.info %></p>
+                  <p><%= item.information %></p>
                   <h3 class="my-3">Details</h3>
                   <ul>
                     <li>Lorem Ipsum</li>
@@ -34,21 +34,27 @@
                     <li>&euro; <%= parseFloat(item.price).toFixed(2) %></li>
                   </ul>
 
-               <% } %>
-                    <form action="/pay" method="post">
-                     
-                     
-                      <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong><strong>&euro;<%= parseFloat(item.price) + 1.25 + 3.00 %></strong></li>
-                      <input name="total" type="hidden" class="form-control" value="<%%>" >
-                        <h5 class="font-weight-bold"></h5>
-                      </li>
-                    </ul>
-                      <input type="submit" value="Pay with Paypal" class="btn btn-dark rounded-pill py-3 btn-block">
-                    </form>
-                </div>
+                  
+
+                  
+                  <form action="/pay" method="post">
+                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>&euro;<%= parseFloat(item.price).toFixed(2) %></strong></li>
+                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>&euro;3.00</strong></li>
+                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>&euro;1.25</strong></li>
+                                                                                                                                                
+                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong><strong>&euro;<%= parseFloat(item.price) + 1.25 + 3.00 %></strong></li>
+                    <input name="total" type="hidden" class="form-control" value="<%= parseFloat(item.price) + 1.25 + 3.00  %>" >
+                    <h5 class="font-weight-bold"></h5>
+                  </li>
+                </ul>
+                <input type="submit" value="Pay with Paypal" class="btn btn-dark rounded-pill py-3 btn-block text-white">
+              </form>
+            </div>
             
-              </div>
-              <!-- /.row -->
+          </div>
+          <% } %>
+       <% } %>
+          <!-- /.row -->
  <% }); %>
  
 

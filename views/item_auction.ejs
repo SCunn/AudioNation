@@ -23,7 +23,7 @@
             
                 <div class="col-md-4">
                   <h3 class="my-3">Product Description</h3>
-                  <p><%= item.info %></p>
+                  <p><%= item.information %></p>
                   <h3 class="my-3">Details</h3>
                   
                   <ul>
@@ -50,7 +50,7 @@
  
  <% res.forEach(function(item) { %>
  
- <form accept-charset="UTF-8" style="" action="/bid/<%= item.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
+ <form accept-charset="UTF-8"  action="/bid/<%= item.id %>" method="post" enctype="multipart/form-data" id="uploadForm" ref="uploadForm">    
     
     <div class="form-group row">
        
@@ -95,7 +95,7 @@
     
     <div class="form-group row">
         <div class="col-md-6">
-             <input name="information" type="hidden" value="<%= item.info %>" />
+             <input name="information" type="hidden" value="<%= item.information %>" />
         </div>
     </div>
     

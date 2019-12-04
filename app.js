@@ -11,7 +11,7 @@ var flash = require('connect-flash');
 var bcrypt = require('bcrypt-nodejs');
 var math = require('mathjs');
 
-//const { TaskTimer } = require('tasktimer');
+
 
 const paypal = require('paypal-rest-sdk');
 
@@ -188,7 +188,7 @@ var products = require("./data/products.json");
 // set up middleware function invoking the request and response function
 app.get('/', function (req, res) {
     res.render("index"); // renders the index page in the web browser
-    console.log("Home Page Loaded"); // used to output activity in the console
+  
 });
 
 
@@ -198,6 +198,7 @@ app.get('/', function (req, res) {
 //===========CRUD products JSON===============================================
 
 app.get('/items', function (req, res) {
+    
     datenow = Date.now();
     var productId = products && products[0].id;
     res.render("items", { products, datenow });
@@ -281,7 +282,7 @@ app.post('/additem', isLoggedIn, function (req, res) {
         image: image,
         genre: req.body.genre,
         quality: req.body.quality,
-        info: req.body.information,
+        information: req.body.information,
         price: req.body.price,
         purpose: req.body.purpose,
         duration: Date.parse(req.body.duration)
@@ -466,12 +467,13 @@ app.post('/bid/:id', function (req, res) {
     json = JSON.stringify(products, null, 12); // Structures the JSON to be more legible
     fs.writeFile('./data/products.json', json, 'utf8', function (err) { console.log(err) });
 
-    req.flash('Bid', 'New Bid Placed on Your Item ! ');
+    
 
 
 
     res.redirect("/profile");
 })
+
 
 
 
@@ -496,7 +498,7 @@ app.get('/item/:id/:bidding_user_id/:params', function (req, res) {
 
     var mainOne = products.filter(chooseItem);
 
-    res.render("auction_win", { res: mainOne });
+    res.render("auction_win", { res: mainOne, user: req.user });
 
 });
 
@@ -505,6 +507,16 @@ app.get('/item/:id/:bidding_user_id/:params', function (req, res) {
 // // buy now
 app.get('/item/:id/BuyNow', function (req, res) {
 
+    let sql = 'SELECT * FROM users WHERE Id =  "' + req.user.Id + '" ';
+
+    let query = db.query(sql, (err, res) => {
+
+        if (err) throw err;
+
+        console.log(res);
+
+    });
+
     // build the information based on changes made by the user
     function chooseItem(mainOne) {
         return mainOne.id === parseInt(req.params.id)
@@ -512,7 +524,7 @@ app.get('/item/:id/BuyNow', function (req, res) {
 
     var mainOne = products.filter(chooseItem);
 
-    res.render("item_forsale", { res: mainOne });
+    res.render("item_forsale", { res: mainOne, user: req.user});
 
 });
 
@@ -562,7 +574,7 @@ app.get('/profile', isLoggedIn, function (req, res) {
 
     var user_Id = parseInt(req.user.Id);
 
-    console.log(util.inspect(user_Id, false, null, true));
+    // console.log(util.inspect(user_Id, false, null, true));
 
     var product_user_Id = products[0].Id;
 
@@ -572,7 +584,7 @@ app.get('/profile', isLoggedIn, function (req, res) {
     datenow = Date.now()
 
     res.render("profile", {
-        messages: req.flash('Bid'),
+        
         user: req.user, // get the user out of session and pass to template
         products,
         datenow,
@@ -765,7 +777,7 @@ app.get('/addtocart/:id', isLoggedIn, function (req, res, next) {
     console.log(req.session.cart);
     //util used here
     //console.log(util.inspect(product, false, null, true ))
-    res.redirect('/items');
+    res.redirect('/cart');
 
 
 });
@@ -798,23 +810,13 @@ app.get('/remove/:id', isLoggedIn, function (req, res, next) {
 });
 
 
-//////////////////// Checkout ////////////////////////////////////
-
-app.get('/checkout', isLoggedIn, function (req, res, next) {
-    if (!req.session.cart) {              //check if there are products in the cart or not 
-        return res.redirect('/cart');
-    }
-    var cart = new Cart(req.session.cart);
-    res.render('checkout', { totalPrice: cart.totalPrice });
-});
 
 
-//app.gloabalAmount = 0;
+
+
 
 app.post('/pay', isLoggedIn, (req, res) => {
-
-    //app.globalAmount = req.body.amount;
-
+  
     let create_payment_json = JSON.stringify({
         intent: 'sale',
         payer: {
@@ -851,6 +853,8 @@ app.post('/pay', isLoggedIn, (req, res) => {
 });
 
 app.get('/success', function (req, res) {
+   
+    
     const payerId = req.query.PayerID;           // request PayerId & paymentId params from paypal api
     const paymentId = req.query.paymentId;
     
@@ -873,10 +877,12 @@ app.get('/success', function (req, res) {
             console.log("Get Payment Response");
             console.log(JSON.stringify(payment));
             
-
-            res.render('success');
+            res.render('success', {payment});
         }
     });
+    
+    
+
 });
 
 app.get('/cancel', function (req, res) {

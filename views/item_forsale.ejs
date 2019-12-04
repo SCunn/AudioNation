@@ -1,4 +1,4 @@
-<!-- Bootstrap template from https://startbootstrap.com/snippets/portfolio-item/-->
+<!-- item_forsale.ejs including Bootstrap template from https://startbootstrap.com/snippets/portfolio-item/-->
 
 <% include ../partials/header %>
 
@@ -23,7 +23,7 @@
             
                 <div class="col-md-4">
                   <h3 class="my-3">Product Description</h3>
-                  <p><%= item.info %></p>
+                  <p><%= item.information %></p>
                   <h3 class="my-3">Details</h3>
                   <ul>
                     <li>Lorem Ipsum</li>
@@ -35,7 +35,7 @@
                         
                     <div style="padding-bottom: 1%"><a class="btn btn-primary" href="/addtocart/<%= item.id %>" >Add to Cart</a> </div>
                     
-                       
+                  
                 </div>
             
               </div>
