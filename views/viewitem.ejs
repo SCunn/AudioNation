@@ -1,0 +1,71 @@
+<!-- Bootstrap template from https://startbootstrap.com/snippets/portfolio-item/-->
+
+<% include ../partials/header %>
+
+
+ <% res.forEach(function(item) { %>
+         
+                    
+            <!-- Page Content -->
+            <div class="container" style="padding-bottom: 5%;">
+            
+              <!-- Portfolio Item Heading -->
+              <h1 class="my-4"><%= item.album %>
+                <small>By <%= item.artist %></small>
+              </h1>
+            
+              <!-- Portfolio Item Row -->
+              <div class="row">
+            
+                <div class="col-md-8">
+                  <img style="width:100%" class="img-fluid" src="/<%= item.image %>" alt="">
+                </div>
+            
+                <div class="col-md-4">
+                  <h3 class="my-3">Product Description</h3>
+                  <p><%= item.information %></p>
+                  <h3 class="my-3">Details</h3>
+                  
+                  <ul>
+                   
+                    <li><%= item.genre %></li>
+                    <li><%= item.purpose %></li>
+                    <li>&euro; <%= parseFloat(item.price).toFixed(2) %></li>
+                    
+                    <% var int_time = parseInt(item.duration); %>
+                    <% var d = new Date(int_time); %>
+                    
+                    <% var endTime = d.toUTCString(); %>
+                   
+                    
+                    <p>Auction Ends: <%= endTime; %></p>
+
+                  </ul>
+                </div>
+                              <div id="editDelete">
+                <a href="/edititem/<%= item.id %>" class="btn btn-primary">Edit</a>
+                <p class="btn btn-primary" id="doit<%= item.id %>">Delete</a>
+                <p id="yes<%= item.id %>" style="display:none">
+                Are you sure?
+                                      <a href="/delete/<%= item.id %>" class="btn btn-primary">Yes</a>
+                           </p>
+                           
+                           <script>
+                             $(document).ready(function(){
+                               $("#doit<%= item.id %>").click(function(){
+                                 $("#yes<%= item.id %>").fadeIn(1000);
+                                 $("#yes<%= item.id %>").delay(5000).fadeOut(1000); 
+                                 
+                               })
+                               
+                             })
+                             
+                           </script>
+                </div>
+              </div>
+            
+
+ <% }); %>
+
+ 
+<% include ../partials/footer %>

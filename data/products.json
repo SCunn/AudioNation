@@ -48,7 +48,7 @@
                     "genre": "Thrash metal",
                     "quality": "Used",
                     "information": "Peace Sells... but Who's Buying? is the second studio album by American thrash metal band Megadeth, released on September 19, 1986 by Capitol Records. The project was originally handled by Combat Records",
-                    "price": "37.00",
+                    "price": "39.00",
                     "purpose": "Auction",
                     "duration": "1575990000000",
                     "bidding_user_id": 2
@@ -90,20 +90,8 @@
                     "purpose": "BuyNow"
           },
           {
-                    "Id": 2,
-                    "id": 1053,
-                    "artist": "Carl Cox",
-                    "album": "The Best of",
-                    "image": "vinyl-1233111_1920.jpg",
-                    "genre": "Techno",
-                    "quality": "Used",
-                    "information": "Carl Cox (born 29 July 1962) is a British house and techno record producer and DJ. In the 1980s, Cox became a mainstage DJ in the electronica industry. He has performed at numerous clubs and events worldwide and has served as a monthly DJ for BBC Radio 1'",
-                    "price": "12",
-                    "purpose": "BuyNow"
-          },
-          {
                     "Id": 3,
-                    "id": 1053,
+                    "id": 1153,
                     "artist": "Carl Cox",
                     "album": "The Best of",
                     "image": "vinyl-1233111_1920.jpg",
@@ -138,11 +126,10 @@
                     "price": "32",
                     "purpose": "BuyNow",
                     "duration": null
-          }
-          ,
+          },
           {
                     "Id": 3,
-                    "id": 1052,
+                    "id": 1152,
                     "artist": "Metalica",
                     "album": "Kill'em All",
                     "image": "worn-4429101_1920.png",
@@ -154,19 +141,20 @@
           },
           {
                     "Id": 2,
-                    "id": 1053,
+                    "id": 1253,
                     "artist": "Carl Cox",
                     "album": "The Best of",
-                    "image": "vinyl-1233111_1920.jpg",
+                    "image": "vinyl-2573856_1920.jpg",
                     "genre": "Techno",
                     "quality": "Used",
-                    "information": "Carl Cox (born 29 July 1962) is a British house and techno record producer and DJ. In the 1980s, Cox became a mainstage DJ in the electronica industry. He has performed at numerous clubs and events worldwide and has served as a monthly DJ for BBC Radio 1'",
+                    "information": "",
                     "price": "12",
-                    "purpose": "BuyNow"
+                    "purpose": "Auction",
+                    "duration": 1575896400000
           },
           {
                     "Id": 3,
-                    "id": 1053,
+                    "id": 1070,
                     "artist": "Carl Cox",
                     "album": "The Best of",
                     "image": "vinyl-1233111_1920.jpg",
@@ -178,7 +166,7 @@
           },
           {
                     "Id": 4,
-                    "id": 1054,
+                    "id": 1060,
                     "artist": "The Doors",
                     "album": "The Doors",
                     "image": "vinyl-2573856_1920.jpg",
@@ -191,7 +179,7 @@
           },
           {
                     "Id": 4,
-                    "id": 1055,
+                    "id": 1155,
                     "artist": "The Pixies",
                     "album": "Doolittle",
                     "image": "stringify payment on the success page.png",

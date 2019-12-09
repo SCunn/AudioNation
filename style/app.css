@@ -250,7 +250,7 @@ body {
 #editDelete {
   position: relative;
   float: left;
-  
+  padding: 1% 0 3% 0;
 }
 
 .figHolder {

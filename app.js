@@ -370,7 +370,7 @@ app.post('/edititem/:id', isLoggedIn, function (req, res) {
     var g = req.body.information;
     var h = req.body.price;
     var i = req.body.purpose;
-    var j = req.body.duration;
+    var j = Date.parse(req.body.duration);
 
     // The next section pushes new data to the json
 
@@ -529,7 +529,18 @@ app.get('/item/:id/BuyNow', isLoggedIn, function (req, res) {
 });
 
 
+app.get('/viewitem/:id', isLoggedIn, function (req, res) {
 
+    // build the information based on changes made by the user
+    function chooseItem(mainOne) {
+        return mainOne.id === parseInt(req.params.id)
+    }
+
+    var mainOne = products.filter(chooseItem);
+
+    res.render("viewitem", { res: mainOne});
+
+});
 
 // URL TO delete a product
 app.get('/delete/:id', isLoggedIn, function (req, res) {
